@@ -10,8 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Smooth scroll */
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
+      const href = link.getAttribute('href');
+      if (href === '#') return; // ignore placeholder links
       e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
+      const target = document.querySelector(href);
       if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
   });
