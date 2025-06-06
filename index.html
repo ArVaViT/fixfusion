@@ -8,6 +8,9 @@
   <title>FixFusion - Premium Construction Services in Indiana</title>
   <meta name="description" content="FixFusion offers premium construction and renovation services for residential and commercial projects throughout Indiana." />
   <meta name="keywords" content="FixFusion, construction, renovation, building, Indiana, Noblesville, Carmel, Indianapolis, Fishers, Westfield, Hamilton County" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="FixFusion" />
+  <link rel="canonical" href="https://yourwebsite.com/" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="FixFusion - Premium Construction Services in Indiana" />
@@ -15,12 +18,37 @@
   <meta property="og:image" content="assets/banner.png" />
   <meta property="og:url" content="https://yourwebsite.com" />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="FixFusion" />
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
 
   <!-- Favicon -->
   <link rel="icon" href="assets/title_logo.svg" type="image/svg+xml" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "FixFusion",
+      "description": "Premium construction and renovation services in Indiana",
+      "url": "https://yourwebsite.com",
+      "logo": "https://yourwebsite.com/assets/logo.svg",
+      "telephone": "+1-417-470-9888",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Indianapolis",
+        "addressRegion": "IN",
+        "addressCountry": "US"
+      },
+      "areaServed": "Indiana",
+      "sameAs": [
+        "https://www.instagram.com/fixfusionllc/",
+        "https://www.facebook.com/profile.php?id=61556563912040"
+      ]
+    }
+  </script>
 </head>
 <body>
 
@@ -47,11 +75,13 @@
     </div>
   </header>
 
+  <main>
+
   <!-- ========= Hero ========= -->
   <section id="hero" class="hero">
     <h1 class="visually-hidden">FixFusion — Premium Construction & Renovation Services in Indiana</h1>
 
-    <img src="assets/banner.png" alt="Construction Banner" class="hero-banner" />
+      <img src="assets/banner.png" alt="Construction Banner" class="hero-banner" loading="lazy" />
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
@@ -76,15 +106,15 @@
     <button id="services-toggle" class="services-toggle">Show Services &#x25BC;</button>
 
     <div class="services-grid">
-      <div class="service-box"><div class="service-icon"></div><p>New Construction</p></div>
-      <div class="service-box"><div class="service-icon"></div><p>Renovations</p></div>
-      <div class="service-box"><div class="service-icon"></div><p>Remodeling</p></div>
-      <div class="service-box"><div class="service-icon"></div><p>Restoration</p></div>
-      <div class="service-box"><div class="service-icon"></div><p>Interior Finishing</p></div>
-      <div class="service-box"><div class="service-icon"></div><p>Exterior Finishing</p></div>
-      <div class="service-box"><div class="service-icon"></div><p>Custom Design</p></div>
-      <div class="service-box"><div class="service-icon"></div><p>Architecture</p></div>
-      <div class="service-box"><div class="service-icon"></div><p>Project Consulting</p></div>
+      <div class="service-box"><img src="assets/icons/1.svg" alt="New Construction icon" class="service-icon" /><p>New Construction</p></div>
+      <div class="service-box"><img src="assets/icons/2.svg" alt="Renovations icon" class="service-icon" /><p>Renovations</p></div>
+      <div class="service-box"><img src="assets/icons/3.svg" alt="Remodeling icon" class="service-icon" /><p>Remodeling</p></div>
+      <div class="service-box"><img src="assets/icons/4.svg" alt="Restoration icon" class="service-icon" /><p>Restoration</p></div>
+      <div class="service-box"><img src="assets/icons/5.svg" alt="Interior Finishing icon" class="service-icon" /><p>Interior Finishing</p></div>
+      <div class="service-box"><img src="assets/icons/6.svg" alt="Exterior Finishing icon" class="service-icon" /><p>Exterior Finishing</p></div>
+      <div class="service-box"><img src="assets/icons/7.svg" alt="Custom Design icon" class="service-icon" /><p>Custom Design</p></div>
+      <div class="service-box"><img src="assets/icons/8.svg" alt="Architecture icon" class="service-icon" /><p>Architecture</p></div>
+      <div class="service-box"><img src="assets/icons/9.svg" alt="Project Consulting icon" class="service-icon" /><p>Project Consulting</p></div>
     </div>
   </section>
 
@@ -125,6 +155,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ========= Footer ========= -->
   <footer><p>&copy; 2025 FixFusion. All Rights Reserved.</p></footer>
