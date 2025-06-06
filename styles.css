@@ -79,7 +79,7 @@ nav{display:flex;align-items:center;}
 .services-grid .service-box:nth-child(9)  .service-icon{background-image:url("assets/icons/9.svg");}
 .service-box p{font-size:1rem;}
 
-/* кнопка-аккордеон (видна только на мобилке) */
+/* services accordion button (visible only on mobile) */
 .services-toggle{
   display:none;margin:0 auto 1rem;padding:.6rem 1.2rem;
   font-family:'The Youngest Serif',serif;font-size:1rem;
@@ -123,10 +123,10 @@ footer{text-align:center;padding:1rem 0;background:#111;border-top:1px solid #22
 /* ----------  MOBILES  ---------- */
 @media(max-width:768px){
 
-  /* показываем бургер */
+  /* show burger icon */
   .burger{display:flex;}
 
-  /* выпад. меню: раскрытие по вертикали */
+  /* drop-down menu opens vertically */
   .nav-list{
     position:absolute;left:0;right:0;top:80px;
     flex-direction:column;align-items:flex-start;
@@ -140,7 +140,7 @@ footer{text-align:center;padding:1rem 0;background:#111;border-top:1px solid #22
     padding:1.5rem 0;
   }  /* достаточно для трёх пунктов */
 
-  /* кнопка сервисов + аккордеон */
+  /* services button + accordion */
   .services-toggle{display:block;}
   .services-grid{max-height:0;overflow:hidden;transition:max-height .4s ease;}
   .services-grid.open{max-height:2000px;}
@@ -149,8 +149,8 @@ footer{text-align:center;padding:1rem 0;background:#111;border-top:1px solid #22
   .service-icon{width:48px;height:48px;}
   .social-icon{width:40px;height:40px;}
 
-  /* мобильный баннер: svg + cover */
+  /* mobile banner: svg with cover */
   .hero-banner{display:none;}
-  .hero{background:url('assets/mobil_logo.png') center/cover no-repeat;}
+  .hero{background:url('assets/mobile_logo.png') center/cover no-repeat;}
   .hero-overlay{background:rgba(0,0,0,.4);}
 }
