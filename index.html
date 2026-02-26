@@ -52,8 +52,15 @@
 </head>
 <body>
 
+  <!-- Floating Background Orbs -->
+  <div class="floating-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
   <!-- ========= Header ========= -->
-  <header>
+  <header id="site-header">
     <div class="header-container">
       <div class="container">
         <a href="#hero" class="logo-link" aria-label="FixFusion Home">
@@ -81,53 +88,109 @@
   <section id="hero" class="hero">
     <h1 class="visually-hidden">FixFusion — Premium Construction & Renovation Services in Indiana</h1>
 
-      <img src="assets/banner.png" alt="Construction Banner" class="hero-banner" loading="lazy" />
+    <img src="assets/banner.png" alt="Construction Banner" class="hero-banner" loading="eager" />
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
       <div class="container hero-inner">
         <img src="assets/logo.svg" alt="FixFusion Construction Company Logo" class="hero-logo" />
-        <div id="scroll-arrow" class="scroll-arrow" aria-hidden="true">&#x2193;</div>
+        <p class="hero-tagline">Premium Construction & Renovation</p>
       </div>
+    </div>
+
+    <div id="scroll-arrow" class="scroll-arrow" aria-hidden="true">
+      <span class="scroll-arrow-text">Scroll</span>
+      <div class="scroll-arrow-line"></div>
     </div>
   </section>
 
   <!-- ========= About ========= -->
   <section id="about" class="content-section">
-    <h2>About Us</h2>
-    <p>
-      FixFusion is a leading construction company dedicated to delivering superior building and renovation solutions. Our experienced team manages both commercial and residential projects throughout Indiana with a focus on quality, safety, and innovation.
-    </p>
+    <div class="reveal">
+      <span class="section-label">Who We Are</span>
+      <h2>Building <span class="accent">Excellence</span></h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="about-content">
+      <p class="about-text reveal stagger-1">
+        FixFusion is a leading construction company dedicated to delivering superior building and renovation solutions. Our experienced team manages both commercial and residential projects throughout Indiana with a focus on quality, safety, and innovation. We transform visions into reality with precision craftsmanship and unwavering attention to detail.
+      </p>
+
+      <div class="about-stats">
+        <div class="stat-item reveal stagger-2">
+          <div class="stat-number" data-count="150">0</div>
+          <div class="stat-label">Projects Done</div>
+        </div>
+        <div class="stat-item reveal stagger-3">
+          <div class="stat-number" data-count="12">0</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item reveal stagger-4">
+          <div class="stat-number" data-count="98">0</div>
+          <div class="stat-label">Happy Clients %</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ========= Services ========= -->
   <section id="services" class="content-section">
-    <h2>Our Services</h2>
+    <div class="reveal">
+      <span class="section-label">What We Do</span>
+      <h2>Our <span class="accent">Services</span></h2>
+      <div class="section-divider"></div>
+      <p class="section-desc">From ground-up construction to detailed renovations, we bring expertise to every phase of your project.</p>
+    </div>
+
     <button id="services-toggle" class="services-toggle">Show Services &#x25BC;</button>
 
     <div class="services-grid">
-      <div class="service-box"><img src="assets/icons/1.svg" alt="New Construction icon" class="service-icon" /><p>New Construction</p></div>
-      <div class="service-box"><img src="assets/icons/2.svg" alt="Renovations icon" class="service-icon" /><p>Renovations</p></div>
-      <div class="service-box"><img src="assets/icons/3.svg" alt="Remodeling icon" class="service-icon" /><p>Remodeling</p></div>
-      <div class="service-box"><img src="assets/icons/4.svg" alt="Restoration icon" class="service-icon" /><p>Restoration</p></div>
-      <div class="service-box"><img src="assets/icons/5.svg" alt="Interior Finishing icon" class="service-icon" /><p>Interior Finishing</p></div>
-      <div class="service-box"><img src="assets/icons/6.svg" alt="Exterior Finishing icon" class="service-icon" /><p>Exterior Finishing</p></div>
-      <div class="service-box"><img src="assets/icons/7.svg" alt="Custom Design icon" class="service-icon" /><p>Custom Design</p></div>
-      <div class="service-box"><img src="assets/icons/8.svg" alt="Architecture icon" class="service-icon" /><p>Architecture</p></div>
-      <div class="service-box"><img src="assets/icons/9.svg" alt="Project Consulting icon" class="service-icon" /><p>Project Consulting</p></div>
+      <div class="service-box reveal stagger-1"><img src="assets/icons/1.svg" alt="New Construction icon" class="service-icon" /><p>New Construction</p></div>
+      <div class="service-box reveal stagger-2"><img src="assets/icons/2.svg" alt="Renovations icon" class="service-icon" /><p>Renovations</p></div>
+      <div class="service-box reveal stagger-3"><img src="assets/icons/3.svg" alt="Remodeling icon" class="service-icon" /><p>Remodeling</p></div>
+      <div class="service-box reveal stagger-4"><img src="assets/icons/4.svg" alt="Restoration icon" class="service-icon" /><p>Restoration</p></div>
+      <div class="service-box reveal stagger-5"><img src="assets/icons/5.svg" alt="Interior Finishing icon" class="service-icon" /><p>Interior Finishing</p></div>
+      <div class="service-box reveal stagger-6"><img src="assets/icons/6.svg" alt="Exterior Finishing icon" class="service-icon" /><p>Exterior Finishing</p></div>
+      <div class="service-box reveal stagger-7"><img src="assets/icons/7.svg" alt="Custom Design icon" class="service-icon" /><p>Custom Design</p></div>
+      <div class="service-box reveal stagger-8"><img src="assets/icons/8.svg" alt="Architecture icon" class="service-icon" /><p>Architecture</p></div>
+      <div class="service-box reveal stagger-9"><img src="assets/icons/9.svg" alt="Project Consulting icon" class="service-icon" /><p>Project Consulting</p></div>
     </div>
   </section>
 
   <!-- ========= Marquee ========= -->
   <div class="marquee" aria-label="Service Areas">
-    <p>Noblesville • Carmel • Indianapolis • Fishers • Westfield • Hamilton County • Greenwood • Fortville • Avon • Zionsville • Geist • Plainfield • Lawrence • Anderson</p>
+    <div class="marquee-track">
+      <p>Noblesville &bull; Carmel &bull; Indianapolis &bull; Fishers &bull; Westfield &bull; Hamilton County &bull; Greenwood &bull; Fortville &bull; Avon &bull; Zionsville &bull; Geist &bull; Plainfield &bull; Lawrence &bull; Anderson &nbsp;&nbsp;&nbsp;</p>
+      <p>Noblesville &bull; Carmel &bull; Indianapolis &bull; Fishers &bull; Westfield &bull; Hamilton County &bull; Greenwood &bull; Fortville &bull; Avon &bull; Zionsville &bull; Geist &bull; Plainfield &bull; Lawrence &bull; Anderson &nbsp;&nbsp;&nbsp;</p>
+    </div>
   </div>
+
+  <!-- ========= CTA ========= -->
+  <section class="cta-section">
+    <div class="cta-inner reveal-scale">
+      <div class="cta-bg"></div>
+      <div class="cta-floating-orb" style="width:200px;height:200px;top:-60px;right:-40px;"></div>
+      <div class="cta-floating-orb" style="width:150px;height:150px;bottom:-50px;left:-30px;"></div>
+      <h2>Ready to Start Your <span class="accent">Project</span>?</h2>
+      <p>Let's bring your vision to life. Contact us today for a free consultation and estimate.</p>
+      <a href="tel:+14174709888" class="cta-btn">
+        Call Us Now
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
 
   <!-- ========= Contacts ========= -->
   <section id="contacts" class="content-section">
-    <h2>Contact Us</h2>
+    <div class="reveal">
+      <span class="section-label">Get In Touch</span>
+      <h2>Contact <span class="accent">Us</span></h2>
+      <div class="section-divider"></div>
+    </div>
+
     <div class="contact-grid">
-      <div class="contact-info">
+      <div class="contact-info reveal-left stagger-1">
         <p><strong>Phone:</strong> <a href="tel:+14174709888">+1 (417) 470-9888</a></p>
         <p><strong>Email:</strong> <a href="mailto:fixfusionllc@gmail.com">fixfusionllc@gmail.com</a></p>
 
@@ -144,12 +207,12 @@
         </div>
       </div>
 
-      <div class="contact-map">
+      <div class="contact-map reveal-right stagger-2">
         <div class="map-container">
           <iframe
             title="Google Maps Location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3068.4397625534096!2d-86.15806838422786!3d39.76840387944969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886b50750be5adf9%3A0x1082b8731a3cf8d!2sIndianapolis%2C%20IN%2C%20USA!5e0!3m2!1sen!2sus!4v0000000000000"
-            width="100%" height="250" style="border:0" allowfullscreen loading="lazy">
+            width="100%" height="100%" style="border:0" allowfullscreen loading="lazy">
           </iframe>
         </div>
       </div>
