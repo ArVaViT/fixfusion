@@ -1,79 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0a" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self';
+             script-src 'self' 'unsafe-inline';
+             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+             font-src https://fonts.gstatic.com;
+             img-src 'self' data:;
+             connect-src 'self' https://api.web3forms.com;
+             frame-src https://www.google.com;
+             base-uri 'self';
+             form-action https://api.web3forms.com;" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 
   <!-- SEO -->
-  <title>FixFusion - Premium Construction Services in Indiana</title>
-  <meta name="description" content="FixFusion offers premium construction and renovation services for residential and commercial projects throughout Indiana." />
+  <title>FixFusion — Premium Construction &amp; Renovation in Indiana</title>
+  <meta name="description" content="FixFusion offers premium construction and renovation services for residential and commercial projects throughout Indiana. Get a free quote today." />
   <meta name="keywords" content="FixFusion, construction, renovation, building, Indiana, Noblesville, Carmel, Indianapolis, Fishers, Westfield, Hamilton County" />
   <meta name="robots" content="index, follow" />
-  <meta name="author" content="FixFusion" />
-  <link rel="canonical" href="https://yourwebsite.com/" />
+  <meta name="author" content="FixFusion LLC" />
+  <link rel="canonical" href="https://www.fixfusionbuild.com/" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="FixFusion - Premium Construction Services in Indiana" />
+  <meta property="og:title" content="FixFusion — Premium Construction &amp; Renovation in Indiana" />
   <meta property="og:description" content="FixFusion provides premier construction and renovation solutions for both residential and commercial projects." />
-  <meta property="og:image" content="assets/banner.png" />
-  <meta property="og:url" content="https://yourwebsite.com" />
+  <meta property="og:image" content="https://www.fixfusionbuild.com/assets/banner.png" />
+  <meta property="og:url" content="https://www.fixfusionbuild.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content="FixFusion" />
+
+  <!-- Preload critical assets -->
+  <link rel="preload" href="assets/logo2.svg" as="image" type="image/svg+xml" />
+  <link rel="preload" href="styles.css" as="style" />
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
 
   <!-- Favicon -->
   <link rel="icon" href="assets/title_logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/title_logo.svg" />
 
+  <!-- Structured Data -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "FixFusion",
       "description": "Premium construction and renovation services in Indiana",
-      "url": "https://yourwebsite.com",
-      "logo": "https://yourwebsite.com/assets/logo.svg",
+      "url": "https://www.fixfusionbuild.com",
+      "logo": "https://www.fixfusionbuild.com/assets/logo.svg",
       "telephone": "+1-417-470-9888",
+      "email": "fixfusionllc@gmail.com",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Indianapolis",
         "addressRegion": "IN",
         "addressCountry": "US"
       },
-      "areaServed": "Indiana",
+      "areaServed": {
+        "@type": "State",
+        "name": "Indiana"
+      },
       "sameAs": [
         "https://www.instagram.com/fixfusionllc/",
         "https://www.facebook.com/profile.php?id=61556563912040"
-      ]
+      ],
+      "priceRange": "$$"
     }
   </script>
 </head>
 <body>
 
-  <!-- Floating Background Orbs -->
+  <!-- Decorative background -->
   <div class="floating-orbs" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
   </div>
 
+  <!-- Skip to content (accessibility) -->
+  <a href="#about" class="skip-link">Skip to content</a>
+
   <!-- ========= Header ========= -->
-  <header id="site-header">
+  <header id="site-header" role="banner">
     <div class="header-container">
       <div class="container">
-        <a href="#hero" class="logo-link" aria-label="FixFusion Home">
-          <img src="assets/logo2.svg" alt="FixFusion Logo" class="nav-logo" />
+        <a href="#hero" class="logo-link" aria-label="FixFusion — Back to top">
+          <img src="assets/logo2.svg" alt="FixFusion" class="nav-logo" width="220" height="50" />
         </a>
 
-        <nav aria-label="Main Navigation">
-          <button id="burger-btn" class="burger" aria-label="Toggle navigation">
-            <span></span><span></span><span></span>
+        <nav aria-label="Main navigation">
+          <button id="burger-btn" class="burger" type="button"
+                  aria-label="Open menu" aria-expanded="false" aria-controls="nav-list">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
           </button>
 
-          <ul class="nav-list">
+          <ul id="nav-list" class="nav-list" role="list">
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#quote">Get Quote</a></li>
@@ -84,339 +115,396 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
 
-  <!-- ========= Hero ========= -->
-  <section id="hero" class="hero">
-    <h1 class="visually-hidden">FixFusion — Premium Construction & Renovation Services in Indiana</h1>
+    <!-- ========= Hero ========= -->
+    <section id="hero" class="hero" aria-labelledby="hero-heading">
+      <h1 id="hero-heading" class="visually-hidden">
+        FixFusion — Premium Construction &amp; Renovation Services in Indiana
+      </h1>
 
-    <img src="assets/banner.png" alt="Construction Banner" class="hero-banner" loading="eager" />
-    <div class="hero-overlay"></div>
+      <img src="assets/banner.png" alt="" class="hero-banner" role="presentation"
+           loading="eager" decoding="async" fetchpriority="high" />
+      <div class="hero-overlay" aria-hidden="true"></div>
 
-    <div class="hero-content">
-      <div class="container hero-inner">
-        <img src="assets/logo.svg" alt="FixFusion Construction Company Logo" class="hero-logo" />
-        <p class="hero-tagline">Premium Construction & Renovation</p>
-        <div class="hero-actions">
-          <a href="#quote" class="hero-btn primary">Get Free Quote</a>
-          <a href="tel:+14174709888" class="hero-btn secondary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            Call Now
-          </a>
+      <div class="hero-content">
+        <div class="container hero-inner">
+          <img src="assets/logo.svg" alt="FixFusion" class="hero-logo"
+               width="600" height="340" loading="eager" />
+          <p class="hero-tagline">Premium Construction &amp; Renovation</p>
+          <div class="hero-actions">
+            <a href="#quote" class="hero-btn primary">Get Free Quote</a>
+            <a href="tel:+14174709888" class="hero-btn secondary" aria-label="Call FixFusion at +1 417 470 9888">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6
+                         19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361
+                         1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1
+                         2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              Call Now
+            </a>
+          </div>
         </div>
+      </div>
+
+      <div id="scroll-arrow" class="scroll-arrow" aria-hidden="true">
+        <span class="scroll-arrow-text">Scroll</span>
+        <div class="scroll-arrow-line"></div>
+      </div>
+    </section>
+
+    <!-- ========= About ========= -->
+    <section id="about" class="content-section" aria-labelledby="about-heading">
+      <div class="reveal">
+        <span class="section-label">Who We Are</span>
+        <h2 id="about-heading">Building <span class="accent">Excellence</span></h2>
+        <div class="section-divider" aria-hidden="true"></div>
+      </div>
+
+      <div class="about-content">
+        <p class="about-text reveal stagger-1">
+          FixFusion is a leading construction company dedicated to delivering superior building
+          and renovation solutions. Our experienced team manages both commercial and residential
+          projects throughout Indiana with a focus on quality, safety, and innovation.
+        </p>
+
+        <div class="about-stats" role="list" aria-label="Company statistics">
+          <div class="stat-item reveal stagger-2" role="listitem">
+            <div class="stat-number" data-count="150" aria-label="150+ projects completed">0</div>
+            <div class="stat-label">Projects</div>
+          </div>
+          <div class="stat-item reveal stagger-3" role="listitem">
+            <div class="stat-number" data-count="12" aria-label="12+ years of experience">0</div>
+            <div class="stat-label">Years</div>
+          </div>
+          <div class="stat-item reveal stagger-4" role="listitem">
+            <div class="stat-number" data-count="98" aria-label="98% client satisfaction">0</div>
+            <div class="stat-label">Satisfied %</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= Services ========= -->
+    <section id="services" class="content-section" aria-labelledby="services-heading">
+      <div class="reveal">
+        <span class="section-label">What We Do</span>
+        <h2 id="services-heading">Our <span class="accent">Services</span></h2>
+        <div class="section-divider" aria-hidden="true"></div>
+        <p class="section-desc">
+          From ground-up construction to detailed renovations, we bring expertise
+          to every phase of your project.
+        </p>
+      </div>
+
+      <button id="services-toggle" class="services-toggle" type="button"
+              aria-expanded="false" aria-controls="services-grid">
+        Show Services &#x25BC;
+      </button>
+
+      <div id="services-grid" class="services-grid" role="list" aria-label="List of services">
+        <div class="service-box reveal stagger-1" role="listitem"><img src="assets/icons/1.svg" alt="" class="service-icon" width="48" height="48" loading="lazy" /><p>New Construction</p></div>
+        <div class="service-box reveal stagger-2" role="listitem"><img src="assets/icons/2.svg" alt="" class="service-icon" width="48" height="48" loading="lazy" /><p>Renovations</p></div>
+        <div class="service-box reveal stagger-3" role="listitem"><img src="assets/icons/3.svg" alt="" class="service-icon" width="48" height="48" loading="lazy" /><p>Remodeling</p></div>
+        <div class="service-box reveal stagger-4" role="listitem"><img src="assets/icons/4.svg" alt="" class="service-icon" width="48" height="48" loading="lazy" /><p>Restoration</p></div>
+        <div class="service-box reveal stagger-5" role="listitem"><img src="assets/icons/5.svg" alt="" class="service-icon" width="48" height="48" loading="lazy" /><p>Interior Finishing</p></div>
+        <div class="service-box reveal stagger-6" role="listitem"><img src="assets/icons/6.svg" alt="" class="service-icon" width="48" height="48" loading="lazy" /><p>Exterior Finishing</p></div>
+        <div class="service-box reveal stagger-7" role="listitem"><img src="assets/icons/7.svg" alt="" class="service-icon" width="48" height="48" loading="lazy" /><p>Custom Design</p></div>
+        <div class="service-box reveal stagger-8" role="listitem"><img src="assets/icons/8.svg" alt="" class="service-icon" width="48" height="48" loading="lazy" /><p>Architecture</p></div>
+        <div class="service-box reveal stagger-9" role="listitem"><img src="assets/icons/9.svg" alt="" class="service-icon" width="48" height="48" loading="lazy" /><p>Project Consulting</p></div>
+      </div>
+    </section>
+
+    <!-- ========= Marquee ========= -->
+    <div class="marquee" role="marquee" aria-label="Service areas: Noblesville, Carmel, Indianapolis, Fishers, Westfield, and more">
+      <div class="marquee-track" aria-hidden="true">
+        <p>Noblesville &bull; Carmel &bull; Indianapolis &bull; Fishers &bull; Westfield &bull; Hamilton County &bull; Greenwood &bull; Fortville &bull; Avon &bull; Zionsville &bull; Geist &bull; Plainfield &bull; Lawrence &bull; Anderson&nbsp;&nbsp;&nbsp;</p>
+        <p>Noblesville &bull; Carmel &bull; Indianapolis &bull; Fishers &bull; Westfield &bull; Hamilton County &bull; Greenwood &bull; Fortville &bull; Avon &bull; Zionsville &bull; Geist &bull; Plainfield &bull; Lawrence &bull; Anderson&nbsp;&nbsp;&nbsp;</p>
       </div>
     </div>
 
-    <div id="scroll-arrow" class="scroll-arrow" aria-hidden="true">
-      <span class="scroll-arrow-text">Scroll</span>
-      <div class="scroll-arrow-line"></div>
-    </div>
-  </section>
-
-  <!-- ========= About ========= -->
-  <section id="about" class="content-section">
-    <div class="reveal">
-      <span class="section-label">Who We Are</span>
-      <h2>Building <span class="accent">Excellence</span></h2>
-      <div class="section-divider"></div>
-    </div>
-
-    <div class="about-content">
-      <p class="about-text reveal stagger-1">
-        FixFusion is a leading construction company dedicated to delivering superior building and renovation solutions. Our experienced team manages both commercial and residential projects throughout Indiana with a focus on quality, safety, and innovation.
-      </p>
-
-      <div class="about-stats">
-        <div class="stat-item reveal stagger-2">
-          <div class="stat-number" data-count="150">0</div>
-          <div class="stat-label">Projects</div>
-        </div>
-        <div class="stat-item reveal stagger-3">
-          <div class="stat-number" data-count="12">0</div>
-          <div class="stat-label">Years</div>
-        </div>
-        <div class="stat-item reveal stagger-4">
-          <div class="stat-number" data-count="98">0</div>
-          <div class="stat-label">Satisfied %</div>
-        </div>
+    <!-- ========= Quote Form ========= -->
+    <section id="quote" class="content-section quote-section" aria-labelledby="quote-heading">
+      <div class="reveal">
+        <span class="section-label">Free Estimate</span>
+        <h2 id="quote-heading">Get Your <span class="accent">Quote</span></h2>
+        <div class="section-divider" aria-hidden="true"></div>
+        <p class="section-desc">
+          Tell us about your project and we'll get back to you with a personalized
+          estimate within 24 hours.
+        </p>
       </div>
-    </div>
-  </section>
 
-  <!-- ========= Services ========= -->
-  <section id="services" class="content-section">
-    <div class="reveal">
-      <span class="section-label">What We Do</span>
-      <h2>Our <span class="accent">Services</span></h2>
-      <div class="section-divider"></div>
-      <p class="section-desc">From ground-up construction to detailed renovations, we bring expertise to every phase of your project.</p>
-    </div>
-
-    <button id="services-toggle" class="services-toggle">Show Services &#x25BC;</button>
-
-    <div class="services-grid">
-      <div class="service-box reveal stagger-1"><img src="assets/icons/1.svg" alt="New Construction icon" class="service-icon" /><p>New Construction</p></div>
-      <div class="service-box reveal stagger-2"><img src="assets/icons/2.svg" alt="Renovations icon" class="service-icon" /><p>Renovations</p></div>
-      <div class="service-box reveal stagger-3"><img src="assets/icons/3.svg" alt="Remodeling icon" class="service-icon" /><p>Remodeling</p></div>
-      <div class="service-box reveal stagger-4"><img src="assets/icons/4.svg" alt="Restoration icon" class="service-icon" /><p>Restoration</p></div>
-      <div class="service-box reveal stagger-5"><img src="assets/icons/5.svg" alt="Interior Finishing icon" class="service-icon" /><p>Interior Finishing</p></div>
-      <div class="service-box reveal stagger-6"><img src="assets/icons/6.svg" alt="Exterior Finishing icon" class="service-icon" /><p>Exterior Finishing</p></div>
-      <div class="service-box reveal stagger-7"><img src="assets/icons/7.svg" alt="Custom Design icon" class="service-icon" /><p>Custom Design</p></div>
-      <div class="service-box reveal stagger-8"><img src="assets/icons/8.svg" alt="Architecture icon" class="service-icon" /><p>Architecture</p></div>
-      <div class="service-box reveal stagger-9"><img src="assets/icons/9.svg" alt="Project Consulting icon" class="service-icon" /><p>Project Consulting</p></div>
-    </div>
-  </section>
-
-  <!-- ========= Marquee ========= -->
-  <div class="marquee" aria-label="Service Areas">
-    <div class="marquee-track">
-      <p>Noblesville &bull; Carmel &bull; Indianapolis &bull; Fishers &bull; Westfield &bull; Hamilton County &bull; Greenwood &bull; Fortville &bull; Avon &bull; Zionsville &bull; Geist &bull; Plainfield &bull; Lawrence &bull; Anderson &nbsp;&nbsp;&nbsp;</p>
-      <p>Noblesville &bull; Carmel &bull; Indianapolis &bull; Fishers &bull; Westfield &bull; Hamilton County &bull; Greenwood &bull; Fortville &bull; Avon &bull; Zionsville &bull; Geist &bull; Plainfield &bull; Lawrence &bull; Anderson &nbsp;&nbsp;&nbsp;</p>
-    </div>
-  </div>
-
-  <!-- ========= Quote Calculator ========= -->
-  <section id="quote" class="content-section quote-section">
-    <div class="reveal">
-      <span class="section-label">Free Estimate</span>
-      <h2>Get Your <span class="accent">Quote</span></h2>
-      <div class="section-divider"></div>
-      <p class="section-desc">Tell us about your project and we'll get back to you with a personalized estimate within 24 hours.</p>
-    </div>
-
-    <div class="quote-card reveal stagger-1">
-      <form id="quote-form" class="quote-form" action="https://api.web3forms.com/submit" method="POST">
-        <!-- Web3Forms access key — replace YOUR_ACCESS_KEY with your real key from https://web3forms.com -->
-        <input type="hidden" name="access_key" value="68d5f7da-e608-4c06-bc6d-f2516346a21b" />
-        <input type="hidden" name="subject" value="New Quote Request from FixFusion Website" />
-        <input type="hidden" name="from_name" value="FixFusion Website" />
-        <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
-
-        <!-- Step indicators -->
-        <div class="form-steps">
-          <div class="step-dot active" data-step="1"><span>1</span></div>
-          <div class="step-line"><div class="step-line-fill"></div></div>
-          <div class="step-dot" data-step="2"><span>2</span></div>
-          <div class="step-line"><div class="step-line-fill"></div></div>
-          <div class="step-dot" data-step="3"><span>3</span></div>
-        </div>
-
-        <!-- Step 1: Service -->
-        <div class="form-step active" data-step="1">
-          <h3 class="step-title">What do you need?</h3>
-
-          <div class="service-select-grid">
-            <label class="service-option">
-              <input type="radio" name="service" value="New Construction" required />
-              <div class="service-option-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
-                <span>New Construction</span>
-              </div>
-            </label>
-            <label class="service-option">
-              <input type="radio" name="service" value="Renovation" />
-              <div class="service-option-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                <span>Renovation</span>
-              </div>
-            </label>
-            <label class="service-option">
-              <input type="radio" name="service" value="Remodeling" />
-              <div class="service-option-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/></svg>
-                <span>Remodeling</span>
-              </div>
-            </label>
-            <label class="service-option">
-              <input type="radio" name="service" value="Interior Finishing" />
-              <div class="service-option-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
-                <span>Interior</span>
-              </div>
-            </label>
-            <label class="service-option">
-              <input type="radio" name="service" value="Exterior Finishing" />
-              <div class="service-option-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-                <span>Exterior</span>
-              </div>
-            </label>
-            <label class="service-option">
-              <input type="radio" name="service" value="Other" />
-              <div class="service-option-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-                <span>Other</span>
-              </div>
-            </label>
+      <div class="quote-card reveal stagger-1">
+        <form id="quote-form" class="quote-form" action="https://api.web3forms.com/submit"
+              method="POST" novalidate>
+          <input type="hidden" name="access_key" value="68d5f7da-e608-4c06-bc6d-f2516346a21b" />
+          <input type="hidden" name="subject" value="New Quote Request — FixFusion Website" />
+          <input type="hidden" name="from_name" value="FixFusion Website" />
+          <input type="hidden" name="redirect" value="" />
+          <!-- Honeypot -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px">
+            <input type="text" name="botcheck" tabindex="-1" autocomplete="off" />
           </div>
 
-          <button type="button" class="form-next-btn" data-next="2" disabled>
-            Next Step
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </div>
+          <!-- Step indicators -->
+          <div class="form-steps" aria-label="Form progress" role="progressbar"
+               aria-valuenow="1" aria-valuemin="1" aria-valuemax="3">
+            <div class="step-dot active" data-step="1"><span>1</span></div>
+            <div class="step-line"><div class="step-line-fill"></div></div>
+            <div class="step-dot" data-step="2"><span>2</span></div>
+            <div class="step-line"><div class="step-line-fill"></div></div>
+            <div class="step-dot" data-step="3"><span>3</span></div>
+          </div>
 
-        <!-- Step 2: Details -->
-        <div class="form-step" data-step="2">
-          <h3 class="step-title">Project details</h3>
+          <!-- Step 1: Service -->
+          <fieldset class="form-step active" data-step="1">
+            <legend class="step-title">What do you need?</legend>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="sqft">Approx. Square Footage</label>
-              <select id="sqft" name="square_footage" required>
-                <option value="" disabled selected>Select size</option>
-                <option value="Under 500 sq ft">Under 500 sq ft</option>
-                <option value="500 - 1,000 sq ft">500 – 1,000 sq ft</option>
-                <option value="1,000 - 2,500 sq ft">1,000 – 2,500 sq ft</option>
-                <option value="2,500 - 5,000 sq ft">2,500 – 5,000 sq ft</option>
-                <option value="5,000+ sq ft">5,000+ sq ft</option>
-              </select>
+            <div class="service-select-grid" role="radiogroup" aria-label="Select a service type">
+              <label class="service-option">
+                <input type="radio" name="service" value="New Construction" required />
+                <div class="service-option-card">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+                  <span>New Construction</span>
+                </div>
+              </label>
+              <label class="service-option">
+                <input type="radio" name="service" value="Renovation" />
+                <div class="service-option-card">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  <span>Renovation</span>
+                </div>
+              </label>
+              <label class="service-option">
+                <input type="radio" name="service" value="Remodeling" />
+                <div class="service-option-card">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/></svg>
+                  <span>Remodeling</span>
+                </div>
+              </label>
+              <label class="service-option">
+                <input type="radio" name="service" value="Interior Finishing" />
+                <div class="service-option-card">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
+                  <span>Interior</span>
+                </div>
+              </label>
+              <label class="service-option">
+                <input type="radio" name="service" value="Exterior Finishing" />
+                <div class="service-option-card">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                  <span>Exterior</span>
+                </div>
+              </label>
+              <label class="service-option">
+                <input type="radio" name="service" value="Other" />
+                <div class="service-option-card">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                  <span>Other</span>
+                </div>
+              </label>
             </div>
-            <div class="form-group">
-              <label for="timeline">Timeline</label>
-              <select id="timeline" name="timeline" required>
-                <option value="" disabled selected>When to start?</option>
-                <option value="ASAP">ASAP</option>
-                <option value="1-3 months">1–3 months</option>
-                <option value="3-6 months">3–6 months</option>
-                <option value="6+ months">6+ months</option>
-                <option value="Just exploring">Just exploring</option>
-              </select>
-            </div>
-          </div>
 
-          <div class="form-group">
-            <label for="budget">Budget Range</label>
-            <select id="budget" name="budget" required>
-              <option value="" disabled selected>Select budget</option>
-              <option value="Under $25,000">Under $25,000</option>
-              <option value="$25,000 - $50,000">$25,000 – $50,000</option>
-              <option value="$50,000 - $100,000">$50,000 – $100,000</option>
-              <option value="$100,000 - $250,000">$100,000 – $250,000</option>
-              <option value="$250,000+">$250,000+</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="details">Project Description <span class="optional">(optional)</span></label>
-            <textarea id="details" name="project_description" rows="3" placeholder="Tell us more about your vision..."></textarea>
-          </div>
-
-          <div class="form-nav">
-            <button type="button" class="form-back-btn" data-back="1">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-              Back
-            </button>
-            <button type="button" class="form-next-btn" data-next="3">
+            <button type="button" class="form-next-btn" data-next="2" disabled aria-label="Go to step 2">
               Next Step
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
-          </div>
-        </div>
+          </fieldset>
 
-        <!-- Step 3: Contact -->
-        <div class="form-step" data-step="3">
-          <h3 class="step-title">Your contact info</h3>
+          <!-- Step 2: Details -->
+          <fieldset class="form-step" data-step="2">
+            <legend class="step-title">Project details</legend>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="fname">Full Name</label>
-              <input type="text" id="fname" name="name" required placeholder="John Smith" autocomplete="name" />
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sqft">Approx. Square Footage</label>
+                <select id="sqft" name="square_footage" required>
+                  <option value="" disabled selected>Select size</option>
+                  <option value="Under 500 sq ft">Under 500 sq ft</option>
+                  <option value="500 - 1,000 sq ft">500 – 1,000 sq ft</option>
+                  <option value="1,000 - 2,500 sq ft">1,000 – 2,500 sq ft</option>
+                  <option value="2,500 - 5,000 sq ft">2,500 – 5,000 sq ft</option>
+                  <option value="5,000+ sq ft">5,000+ sq ft</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="timeline">Timeline</label>
+                <select id="timeline" name="timeline" required>
+                  <option value="" disabled selected>When to start?</option>
+                  <option value="ASAP">ASAP</option>
+                  <option value="1-3 months">1–3 months</option>
+                  <option value="3-6 months">3–6 months</option>
+                  <option value="6+ months">6+ months</option>
+                  <option value="Just exploring">Just exploring</option>
+                </select>
+              </div>
             </div>
+
             <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="tel" id="phone" name="phone" required placeholder="+1 (___) ___-____" autocomplete="tel" />
+              <label for="budget">Budget Range</label>
+              <select id="budget" name="budget" required>
+                <option value="" disabled selected>Select budget</option>
+                <option value="Under $25,000">Under $25,000</option>
+                <option value="$25,000 - $50,000">$25,000 – $50,000</option>
+                <option value="$50,000 - $100,000">$50,000 – $100,000</option>
+                <option value="$100,000 - $250,000">$100,000 – $250,000</option>
+                <option value="$250,000+">$250,000+</option>
+              </select>
             </div>
+
+            <div class="form-group">
+              <label for="details">Project Description <span class="optional">(optional)</span></label>
+              <textarea id="details" name="project_description" rows="3" maxlength="2000"
+                        placeholder="Tell us more about your vision..."></textarea>
+            </div>
+
+            <div class="form-nav">
+              <button type="button" class="form-back-btn" data-back="1" aria-label="Go back to step 1">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back
+              </button>
+              <button type="button" class="form-next-btn" data-next="3" aria-label="Go to step 3">
+                Next Step
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </fieldset>
+
+          <!-- Step 3: Contact -->
+          <fieldset class="form-step" data-step="3">
+            <legend class="step-title">Your contact info</legend>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">Full Name</label>
+                <input type="text" id="fname" name="name" required
+                       minlength="2" maxlength="100"
+                       pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s\-']{2,100}"
+                       placeholder="John Smith" autocomplete="name"
+                       spellcheck="false" />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" required
+                       minlength="7" maxlength="20"
+                       pattern="[\+\d\s\(\)\-]{7,20}"
+                       placeholder="+1 (___) ___-____" autocomplete="tel"
+                       inputmode="tel" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required
+                     maxlength="254"
+                     placeholder="you@example.com" autocomplete="email"
+                     inputmode="email" />
+            </div>
+
+            <div class="form-group">
+              <label for="address">Project Address <span class="optional">(optional)</span></label>
+              <input type="text" id="address" name="project_address"
+                     maxlength="200"
+                     placeholder="123 Main St, Indianapolis, IN"
+                     autocomplete="street-address" />
+            </div>
+
+            <div class="form-nav">
+              <button type="button" class="form-back-btn" data-back="2" aria-label="Go back to step 2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back
+              </button>
+              <button type="submit" class="form-submit-btn" aria-label="Submit quote request">
+                <span class="btn-text">Send Request</span>
+                <span class="btn-loading" hidden>
+                  <svg class="spinner" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"
+                            fill="none" stroke-dasharray="31 31" stroke-linecap="round"/>
+                  </svg>
+                  Sending…
+                </span>
+              </button>
+            </div>
+          </fieldset>
+
+          <!-- Success -->
+          <div class="form-success" hidden aria-live="polite">
+            <div class="success-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <h3>Request Sent!</h3>
+            <p>We'll review your project details and contact you within 24 hours with a personalized estimate.</p>
+            <a href="tel:+14174709888" class="success-call-btn">Or call us now: +1 (417) 470-9888</a>
           </div>
+        </form>
+      </div>
+    </section>
 
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email" />
-          </div>
-
-          <div class="form-group">
-            <label for="address">Project Address <span class="optional">(optional)</span></label>
-            <input type="text" id="address" name="project_address" placeholder="123 Main St, Indianapolis, IN" autocomplete="street-address" />
-          </div>
-
-          <div class="form-nav">
-            <button type="button" class="form-back-btn" data-back="2">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-              Back
-            </button>
-            <button type="submit" class="form-submit-btn">
-              <span class="btn-text">Send Request</span>
-              <span class="btn-loading" style="display:none">
-                <svg class="spinner" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31 31" stroke-linecap="round"/></svg>
-                Sending...
-              </span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Success state -->
-        <div class="form-success" style="display:none">
-          <div class="success-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <h3>Request Sent!</h3>
-          <p>We'll review your project details and contact you within 24 hours with a personalized estimate.</p>
-          <a href="tel:+14174709888" class="success-call-btn">
-            Or call us now: +1 (417) 470-9888
-          </a>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- ========= Contacts ========= -->
-  <section id="contacts" class="content-section">
-    <div class="reveal">
-      <span class="section-label">Get In Touch</span>
-      <h2>Contact <span class="accent">Us</span></h2>
-      <div class="section-divider"></div>
-    </div>
-
-    <div class="contact-grid">
-      <div class="contact-info reveal-left stagger-1">
-        <p><strong>Phone:</strong> <a href="tel:+14174709888">+1 (417) 470-9888</a></p>
-        <p><strong>Email:</strong> <a href="mailto:fixfusionllc@gmail.com">fixfusionllc@gmail.com</a></p>
-
-        <div class="social-links">
-          <a href="https://www.instagram.com/fixfusionllc/?utm_source=ig_web_button_share_sheet" aria-label="Instagram" class="social-icon">
-            <img src="assets/instagram.svg" alt="Instagram Icon" />
-          </a>
-          <a href="https://www.facebook.com/profile.php?id=61556563912040" aria-label="Facebook" class="social-icon">
-            <img src="assets/facebook.svg" alt="Facebook Icon" />
-          </a>
-          <a href="#" aria-label="LinkedIn" class="social-icon">
-            <img src="assets/LinkedIn.svg" alt="LinkedIn Icon" />
-          </a>
-        </div>
+    <!-- ========= Contacts ========= -->
+    <section id="contacts" class="content-section" aria-labelledby="contacts-heading">
+      <div class="reveal">
+        <span class="section-label">Get In Touch</span>
+        <h2 id="contacts-heading">Contact <span class="accent">Us</span></h2>
+        <div class="section-divider" aria-hidden="true"></div>
       </div>
 
-      <div class="contact-map reveal-right stagger-2">
-        <div class="map-container">
-          <iframe
-            title="Google Maps Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3068.4397625534096!2d-86.15806838422786!3d39.76840387944969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886b50750be5adf9%3A0x1082b8731a3cf8d!2sIndianapolis%2C%20IN%2C%20USA!5e0!3m2!1sen!2sus!4v0000000000000"
-            width="100%" height="100%" style="border:0" allowfullscreen loading="lazy">
-          </iframe>
+      <div class="contact-grid">
+        <div class="contact-info reveal-left stagger-1">
+          <p><strong>Phone:</strong> <a href="tel:+14174709888">+1 (417) 470-9888</a></p>
+          <p><strong>Email:</strong> <a href="mailto:fixfusionllc@gmail.com">fixfusionllc@gmail.com</a></p>
+
+          <nav class="social-links" aria-label="Social media links">
+            <a href="https://www.instagram.com/fixfusionllc/" target="_blank" rel="noopener noreferrer"
+               aria-label="Follow FixFusion on Instagram" class="social-icon">
+              <img src="assets/instagram.svg" alt="" width="24" height="24" loading="lazy" />
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61556563912040" target="_blank" rel="noopener noreferrer"
+               aria-label="Follow FixFusion on Facebook" class="social-icon">
+              <img src="assets/facebook.svg" alt="" width="24" height="24" loading="lazy" />
+            </a>
+            <a href="#" aria-label="FixFusion on LinkedIn" class="social-icon">
+              <img src="assets/LinkedIn.svg" alt="" width="24" height="24" loading="lazy" />
+            </a>
+          </nav>
+        </div>
+
+        <div class="contact-map reveal-right stagger-2">
+          <div class="map-container">
+            <iframe title="FixFusion location on Google Maps — Indianapolis, IN"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3068.4397625534096!2d-86.15806838422786!3d39.76840387944969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886b50750be5adf9%3A0x1082b8731a3cf8d!2sIndianapolis%2C%20IN%2C%20USA!5e0!3m2!1sen!2sus!4v0000000000000"
+                    width="100%" height="100%" style="border:0"
+                    allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
   </main>
 
   <!-- ========= Footer ========= -->
-  <footer>
+  <footer role="contentinfo">
     <div class="container">
-      <p>&copy; 2025 FixFusion. All Rights Reserved.</p>
+      <p>&copy; <span id="footer-year">2025</span> FixFusion LLC. All Rights Reserved.</p>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="script.js"></script>
+  <!-- Noscript fallback -->
+  <noscript>
+    <style>
+      .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; }
+      .services-grid { max-height: none !important; }
+      .services-toggle { display: none !important; }
+      .nav-list { opacity: 1; visibility: visible; position: static; background: none; }
+    </style>
+  </noscript>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
