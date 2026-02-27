@@ -70,6 +70,9 @@
 
   var burgerBtn, navList, srvToggle, srvGrid, header, hero, scrollArrow;
 
+  /** Shared menu-close function — set by initBurgerMenu, called by initSmoothScroll. */
+  var closeMenu = null;
+
   /* ==========================================================================
      INITIALISATION
      ========================================================================== */
@@ -123,9 +126,17 @@
       var target = qs(href);
       if (!target) return;
       e.preventDefault();
-      var offset = window.innerWidth <= 768 ? 60 : 80;
-      var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+
+      var menuWasOpen = navList && navList.classList.contains('open');
+      if (menuWasOpen && closeMenu) {
+        closeMenu();
+      }
+
+      requestAnimationFrame(function () {
+        var offset = window.innerWidth <= 768 ? 60 : 80;
+        var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      });
     }
 
     var links = qsa('a[href^="#"]');
@@ -189,9 +200,9 @@
       }
     }
 
-    function onBurgerClick() { toggleMenu(); }
+    closeMenu = function () { toggleMenu(false); };
 
-    function onNavLinkClick() { toggleMenu(false); }
+    function onBurgerClick() { toggleMenu(); }
 
     function onDocClick(e) {
       if (
@@ -211,18 +222,14 @@
     }
 
     burgerBtn.addEventListener('click', onBurgerClick);
-
-    var navLinks = navList.querySelectorAll('a');
-    navLinks.forEach(function (link) { link.addEventListener('click', onNavLinkClick); });
-
     document.addEventListener('click', onDocClick);
     document.addEventListener('keydown', onKeyDown);
 
     return function cleanup() {
       burgerBtn.removeEventListener('click', onBurgerClick);
-      navLinks.forEach(function (link) { link.removeEventListener('click', onNavLinkClick); });
       document.removeEventListener('click', onDocClick);
       document.removeEventListener('keydown', onKeyDown);
+      closeMenu = null;
     };
   }
 
