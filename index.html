@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0a" />
 
   <!-- SEO -->
   <title>FixFusion - Premium Construction Services in Indiana</title>
@@ -73,8 +74,9 @@
           </button>
 
           <ul class="nav-list">
-            <li><a href="#about">About Us</a></li>
+            <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
+            <li><a href="#quote">Get Quote</a></li>
             <li><a href="#contacts">Contact</a></li>
           </ul>
         </nav>
@@ -95,6 +97,13 @@
       <div class="container hero-inner">
         <img src="assets/logo.svg" alt="FixFusion Construction Company Logo" class="hero-logo" />
         <p class="hero-tagline">Premium Construction & Renovation</p>
+        <div class="hero-actions">
+          <a href="#quote" class="hero-btn primary">Get Free Quote</a>
+          <a href="tel:+14174709888" class="hero-btn secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call Now
+          </a>
+        </div>
       </div>
     </div>
 
@@ -114,21 +123,21 @@
 
     <div class="about-content">
       <p class="about-text reveal stagger-1">
-        FixFusion is a leading construction company dedicated to delivering superior building and renovation solutions. Our experienced team manages both commercial and residential projects throughout Indiana with a focus on quality, safety, and innovation. We transform visions into reality with precision craftsmanship and unwavering attention to detail.
+        FixFusion is a leading construction company dedicated to delivering superior building and renovation solutions. Our experienced team manages both commercial and residential projects throughout Indiana with a focus on quality, safety, and innovation.
       </p>
 
       <div class="about-stats">
         <div class="stat-item reveal stagger-2">
           <div class="stat-number" data-count="150">0</div>
-          <div class="stat-label">Projects Done</div>
+          <div class="stat-label">Projects</div>
         </div>
         <div class="stat-item reveal stagger-3">
           <div class="stat-number" data-count="12">0</div>
-          <div class="stat-label">Years Experience</div>
+          <div class="stat-label">Years</div>
         </div>
         <div class="stat-item reveal stagger-4">
           <div class="stat-number" data-count="98">0</div>
-          <div class="stat-label">Happy Clients %</div>
+          <div class="stat-label">Satisfied %</div>
         </div>
       </div>
     </div>
@@ -166,18 +175,197 @@
     </div>
   </div>
 
-  <!-- ========= CTA ========= -->
-  <section class="cta-section">
-    <div class="cta-inner reveal-scale">
-      <div class="cta-bg"></div>
-      <div class="cta-floating-orb" style="width:200px;height:200px;top:-60px;right:-40px;"></div>
-      <div class="cta-floating-orb" style="width:150px;height:150px;bottom:-50px;left:-30px;"></div>
-      <h2>Ready to Start Your <span class="accent">Project</span>?</h2>
-      <p>Let's bring your vision to life. Contact us today for a free consultation and estimate.</p>
-      <a href="tel:+14174709888" class="cta-btn">
-        Call Us Now
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+  <!-- ========= Quote Calculator ========= -->
+  <section id="quote" class="content-section quote-section">
+    <div class="reveal">
+      <span class="section-label">Free Estimate</span>
+      <h2>Get Your <span class="accent">Quote</span></h2>
+      <div class="section-divider"></div>
+      <p class="section-desc">Tell us about your project and we'll get back to you with a personalized estimate within 24 hours.</p>
+    </div>
+
+    <div class="quote-card reveal stagger-1">
+      <form id="quote-form" class="quote-form" action="https://api.web3forms.com/submit" method="POST">
+        <!-- Web3Forms access key — replace YOUR_ACCESS_KEY with your real key from https://web3forms.com -->
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY" />
+        <input type="hidden" name="subject" value="New Quote Request from FixFusion Website" />
+        <input type="hidden" name="from_name" value="FixFusion Website" />
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+        <!-- Step indicators -->
+        <div class="form-steps">
+          <div class="step-dot active" data-step="1"><span>1</span></div>
+          <div class="step-line"><div class="step-line-fill"></div></div>
+          <div class="step-dot" data-step="2"><span>2</span></div>
+          <div class="step-line"><div class="step-line-fill"></div></div>
+          <div class="step-dot" data-step="3"><span>3</span></div>
+        </div>
+
+        <!-- Step 1: Service -->
+        <div class="form-step active" data-step="1">
+          <h3 class="step-title">What do you need?</h3>
+
+          <div class="service-select-grid">
+            <label class="service-option">
+              <input type="radio" name="service" value="New Construction" required />
+              <div class="service-option-card">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+                <span>New Construction</span>
+              </div>
+            </label>
+            <label class="service-option">
+              <input type="radio" name="service" value="Renovation" />
+              <div class="service-option-card">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                <span>Renovation</span>
+              </div>
+            </label>
+            <label class="service-option">
+              <input type="radio" name="service" value="Remodeling" />
+              <div class="service-option-card">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/></svg>
+                <span>Remodeling</span>
+              </div>
+            </label>
+            <label class="service-option">
+              <input type="radio" name="service" value="Interior Finishing" />
+              <div class="service-option-card">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
+                <span>Interior</span>
+              </div>
+            </label>
+            <label class="service-option">
+              <input type="radio" name="service" value="Exterior Finishing" />
+              <div class="service-option-card">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                <span>Exterior</span>
+              </div>
+            </label>
+            <label class="service-option">
+              <input type="radio" name="service" value="Other" />
+              <div class="service-option-card">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                <span>Other</span>
+              </div>
+            </label>
+          </div>
+
+          <button type="button" class="form-next-btn" data-next="2" disabled>
+            Next Step
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- Step 2: Details -->
+        <div class="form-step" data-step="2">
+          <h3 class="step-title">Project details</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sqft">Approx. Square Footage</label>
+              <select id="sqft" name="square_footage" required>
+                <option value="" disabled selected>Select size</option>
+                <option value="Under 500 sq ft">Under 500 sq ft</option>
+                <option value="500 - 1,000 sq ft">500 – 1,000 sq ft</option>
+                <option value="1,000 - 2,500 sq ft">1,000 – 2,500 sq ft</option>
+                <option value="2,500 - 5,000 sq ft">2,500 – 5,000 sq ft</option>
+                <option value="5,000+ sq ft">5,000+ sq ft</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="timeline">Timeline</label>
+              <select id="timeline" name="timeline" required>
+                <option value="" disabled selected>When to start?</option>
+                <option value="ASAP">ASAP</option>
+                <option value="1-3 months">1–3 months</option>
+                <option value="3-6 months">3–6 months</option>
+                <option value="6+ months">6+ months</option>
+                <option value="Just exploring">Just exploring</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="budget">Budget Range</label>
+            <select id="budget" name="budget" required>
+              <option value="" disabled selected>Select budget</option>
+              <option value="Under $25,000">Under $25,000</option>
+              <option value="$25,000 - $50,000">$25,000 – $50,000</option>
+              <option value="$50,000 - $100,000">$50,000 – $100,000</option>
+              <option value="$100,000 - $250,000">$100,000 – $250,000</option>
+              <option value="$250,000+">$250,000+</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="details">Project Description <span class="optional">(optional)</span></label>
+            <textarea id="details" name="project_description" rows="3" placeholder="Tell us more about your vision..."></textarea>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="form-back-btn" data-back="1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Back
+            </button>
+            <button type="button" class="form-next-btn" data-next="3">
+              Next Step
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Contact -->
+        <div class="form-step" data-step="3">
+          <h3 class="step-title">Your contact info</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">Full Name</label>
+              <input type="text" id="fname" name="name" required placeholder="John Smith" autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" required placeholder="+1 (___) ___-____" autocomplete="tel" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email" />
+          </div>
+
+          <div class="form-group">
+            <label for="address">Project Address <span class="optional">(optional)</span></label>
+            <input type="text" id="address" name="project_address" placeholder="123 Main St, Indianapolis, IN" autocomplete="street-address" />
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="form-back-btn" data-back="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Back
+            </button>
+            <button type="submit" class="form-submit-btn">
+              <span class="btn-text">Send Request</span>
+              <span class="btn-loading" style="display:none">
+                <svg class="spinner" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31 31" stroke-linecap="round"/></svg>
+                Sending...
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Success state -->
+        <div class="form-success" style="display:none">
+          <div class="success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3>Request Sent!</h3>
+          <p>We'll review your project details and contact you within 24 hours with a personalized estimate.</p>
+          <a href="tel:+14174709888" class="success-call-btn">
+            Or call us now: +1 (417) 470-9888
+          </a>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -222,7 +410,11 @@
   </main>
 
   <!-- ========= Footer ========= -->
-  <footer><p>&copy; 2025 FixFusion. All Rights Reserved.</p></footer>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 FixFusion. All Rights Reserved.</p>
+    </div>
+  </footer>
 
   <!-- Scripts -->
   <script src="script.js"></script>
