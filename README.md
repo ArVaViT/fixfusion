@@ -28,13 +28,14 @@
 
 | Feature | Details |
 |---------|---------|
-| **Mobile-first responsive** | Pixel-perfect on every screen from 320px to 4K |
+| **Mobile-first responsive** | Pixel-perfect on every screen from 320px to 4K. 44px touch targets, iOS zoom prevention, landscape support |
 | **Multi-step quote form** | 3-step wizard with real-time validation & email delivery via [Web3Forms](https://web3forms.com) |
 | **Scroll animations** | IntersectionObserver-powered reveal, counters, parallax |
-| **Accessibility** | ARIA landmarks, skip-link, focus-visible, prefers-reduced-motion, keyboard navigation |
+| **Accessibility** | ARIA landmarks, skip-link, focus-visible, prefers-reduced-motion, keyboard nav, forced-colors |
 | **Security** | CSP meta header, input sanitization, honeypot spam protection, rate-limiting |
-| **SEO** | Open Graph, JSON-LD structured data, semantic HTML5, canonical URL |
-| **Performance** | No frameworks, preloaded assets, lazy-loaded images, `will-change` hints |
+| **SEO** | Local SEO (geo-targeted), FAQPage + GeneralContractor schemas, sitemap.xml, robots.txt, Open Graph, Twitter Cards |
+| **Performance** | No frameworks, preloaded assets, preconnect hints, lazy-loaded images, `will-change` hints |
+| **FAQ section** | 5 geo-rich Q&As targeting Indiana construction keywords for search dominance |
 
 ---
 
@@ -54,6 +55,8 @@ fixfusion/
 ├── index.html           # Single-page HTML
 ├── styles.css           # All styles (mobile-first)
 ├── script.js            # All interactivity (strict mode, IIFE)
+├── sitemap.xml          # XML sitemap for search engines
+├── robots.txt           # Crawler directives
 ├── package.json         # Dev dependencies (Jest)
 ├── .gitignore
 └── README.md

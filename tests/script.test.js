@@ -131,9 +131,11 @@ describe('Quote form — step navigation', () => {
 describe('Safety', () => {
   beforeEach(loadPage);
 
-  test('placeholder LinkedIn link does not throw', () => {
-    const placeholder = document.querySelector('.social-links a[href="#"]');
-    expect(() => fireEvent.click(placeholder)).not.toThrow();
+  test('social links do not throw on click', () => {
+    const links = document.querySelectorAll('.social-links a');
+    links.forEach((link) => {
+      expect(() => fireEvent.click(link)).not.toThrow();
+    });
   });
 
   test('footer year is current year', () => {
