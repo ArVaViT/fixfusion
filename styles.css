@@ -502,8 +502,10 @@ nav { display: flex; align-items: center; }
 .scroll-arrow {
   position: absolute;
   bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1185,6 +1187,7 @@ nav { display: flex; align-items: center; }
   height: 100%;
   border: 0;
   display: block;
+  filter: invert(90%) hue-rotate(180deg) brightness(0.95) contrast(0.9);
 }
 
 /* ===================== FAQ ===================== */
