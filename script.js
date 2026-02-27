@@ -172,7 +172,21 @@
       var isOpen = typeof open === 'boolean' ? open : !navList.classList.contains('open');
       navList.classList.toggle('open', isOpen);
       burgerBtn.setAttribute('aria-expanded', String(isOpen));
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+
+      if (isOpen) {
+        var scrollY = window.pageYOffset;
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + scrollY + 'px';
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+      } else {
+        var savedY = parseInt(document.body.style.top || '0', 10) * -1;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        window.scrollTo(0, savedY);
+      }
     }
 
     function onBurgerClick() { toggleMenu(); }
