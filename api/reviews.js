@@ -1,14 +1,18 @@
 /**
  * Vercel Serverless Function — /api/reviews
  *
- * Fetches Google reviews for FixFusion via Places API.
- * Uses CID from Google Maps URL to resolve the correct Place ID,
- * then fetches reviews via the legacy Place Details endpoint.
+ * Fetches Google reviews for FixFusion via the legacy Places API.
+ * Searches for the business listing that has actual reviews,
+ * then returns them sorted newest-first.
  * Caches response for 24 hours via Cache-Control headers.
  */
 
-var BUSINESS_CID = '9300693256032829380';
 var CACHE_SECONDS = 86400;
+var SEARCH_QUERIES = [
+  'FixFusion Constraction LLC',
+  'FixFusion LLC Indiana',
+  'FixFusion'
+];
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -23,61 +27,91 @@ module.exports = async function handler(req, res) {
 
   try {
     var placeId = process.env.GOOGLE_PLACE_ID || null;
+    var result = null;
 
-    if (!placeId) {
-      placeId = await findPlaceId(apiKey);
-      if (!placeId) {
-        return res.status(404).json({ error: 'Business not found on Google Maps' });
+    if (placeId) {
+      result = await fetchDetails(apiKey, placeId);
+      if (result && result.totalReviews > 0) {
+        return sendJson(res, result);
       }
     }
 
-    var result = await fetchReviews(apiKey, placeId);
+    var candidates = await findAllCandidates(apiKey);
 
-    res.setHeader('Cache-Control', 's-maxage=' + CACHE_SECONDS + ', stale-while-revalidate');
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    for (var i = 0; i < candidates.length; i++) {
+      result = await fetchDetails(apiKey, candidates[i]);
+      if (result && result.totalReviews > 0) {
+        return sendJson(res, result);
+      }
+    }
 
-    return res.status(200).json(result);
+    if (result) {
+      return sendJson(res, result);
+    }
+
+    return res.status(404).json({ error: 'Business not found on Google Maps' });
   } catch (err) {
     console.error('Reviews API error:', err);
     return res.status(500).json({ error: 'Failed to fetch reviews' });
   }
 };
 
-async function findPlaceId(apiKey) {
-  var cidUrl =
-    'https://maps.googleapis.com/maps/api/place/details/json' +
-    '?cid=' + BUSINESS_CID +
-    '&fields=place_id,name,user_ratings_total' +
-    '&key=' + apiKey;
-
-  var resp = await fetch(cidUrl);
-  if (!resp.ok) return null;
-
-  var data = await resp.json();
-  if (data.result && data.result.place_id) {
-    return data.result.place_id;
-  }
-
-  var findUrl =
-    'https://maps.googleapis.com/maps/api/place/findplacefromtext/json' +
-    '?input=FixFusion+Constraction+LLC' +
-    '&inputtype=textquery' +
-    '&locationbias=point:39.76652,-86.4412135' +
-    '&fields=place_id,name,user_ratings_total' +
-    '&key=' + apiKey;
-
-  resp = await fetch(findUrl);
-  if (!resp.ok) return null;
-
-  data = await resp.json();
-  if (data.candidates && data.candidates.length > 0) {
-    return data.candidates[0].place_id;
-  }
-
-  return null;
+function sendJson(res, data) {
+  res.setHeader('Cache-Control', 's-maxage=' + CACHE_SECONDS + ', stale-while-revalidate');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  return res.status(200).json(data);
 }
 
-async function fetchReviews(apiKey, placeId) {
+async function findAllCandidates(apiKey) {
+  var ids = [];
+  var seen = {};
+
+  for (var i = 0; i < SEARCH_QUERIES.length; i++) {
+    var url =
+      'https://maps.googleapis.com/maps/api/place/findplacefromtext/json' +
+      '?input=' + encodeURIComponent(SEARCH_QUERIES[i]) +
+      '&inputtype=textquery' +
+      '&fields=place_id' +
+      '&key=' + apiKey;
+
+    var resp = await fetch(url);
+    if (!resp.ok) continue;
+
+    var data = await resp.json();
+    if (data.candidates) {
+      for (var j = 0; j < data.candidates.length; j++) {
+        var pid = data.candidates[j].place_id;
+        if (pid && !seen[pid]) {
+          seen[pid] = true;
+          ids.push(pid);
+        }
+      }
+    }
+  }
+
+  var textUrl =
+    'https://maps.googleapis.com/maps/api/place/textsearch/json' +
+    '?query=' + encodeURIComponent('FixFusion Constraction LLC') +
+    '&key=' + apiKey;
+
+  var textResp = await fetch(textUrl);
+  if (textResp.ok) {
+    var textData = await textResp.json();
+    if (textData.results) {
+      for (var k = 0; k < textData.results.length; k++) {
+        var tid = textData.results[k].place_id;
+        if (tid && !seen[tid]) {
+          seen[tid] = true;
+          ids.push(tid);
+        }
+      }
+    }
+  }
+
+  return ids;
+}
+
+async function fetchDetails(apiKey, placeId) {
   var url =
     'https://maps.googleapis.com/maps/api/place/details/json' +
     '?place_id=' + placeId +
@@ -86,14 +120,10 @@ async function fetchReviews(apiKey, placeId) {
     '&key=' + apiKey;
 
   var resp = await fetch(url);
-  if (!resp.ok) {
-    throw new Error('Places API returned ' + resp.status);
-  }
+  if (!resp.ok) return null;
 
   var data = await resp.json();
-  if (!data.result) {
-    throw new Error('No result in Places API response');
-  }
+  if (!data.result) return null;
 
   var r = data.result;
   var reviews = (r.reviews || []).map(function (rev) {
@@ -109,6 +139,7 @@ async function fetchReviews(apiKey, placeId) {
 
   return {
     placeId: placeId,
+    name: r.name || '',
     reviews: reviews,
     rating: r.rating || null,
     totalReviews: r.user_ratings_total || 0
