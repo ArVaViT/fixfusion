@@ -585,13 +585,12 @@
       .then(function (data) {
         if (loading) loading.remove();
 
-        if (!data.reviews || data.reviews.length === 0) {
-          var section = byId('reviews');
-          if (section) section.style.display = 'none';
-          var navLink = document.querySelector('a[href="#reviews"]');
-          if (navLink && navLink.parentElement) navLink.parentElement.style.display = 'none';
-          return;
-        }
+        if (!data.reviews || data.reviews.length === 0) return;
+
+        var section = byId('reviews');
+        if (section) section.hidden = false;
+        var navItem = byId('nav-reviews');
+        if (navItem) navItem.hidden = false;
 
         if (summary && starsEl && ratingText && data.rating) {
           summary.hidden = false;
@@ -606,11 +605,7 @@
         });
         track.innerHTML = html;
       })
-      .catch(function () {
-        if (loading) {
-          loading.textContent = 'Could not load reviews.';
-        }
-      });
+      .catch(function () {});
   }
 
   function renderStars(rating) {
