@@ -47,46 +47,32 @@ module.exports = async function handler(req, res) {
 };
 
 async function findPlaceId(apiKey) {
-  var url = 'https://places.googleapis.com/v1/places:searchText';
-  var queries = [
-    PLACE_QUERY,
-    'FixFusion Constraction LLC',
-    'FixFusion LLC',
-    'FixFusion'
-  ];
+  var cidUrl = 'https://maps.googleapis.com/maps/api/place/details/json?cid=9300693256032829380&fields=place_id,name&key=' + apiKey;
+  var cidResp = await fetch(cidUrl);
+  if (cidResp.ok) {
+    var cidData = await cidResp.json();
+    if (cidData.result && cidData.result.place_id) {
+      console.log('Found via CID:', cidData.result.name, cidData.result.place_id);
+      return cidData.result.place_id;
+    }
+  }
 
+  var url = 'https://places.googleapis.com/v1/places:searchText';
+  var queries = [PLACE_QUERY, 'FixFusion LLC', 'FixFusion'];
   for (var i = 0; i < queries.length; i++) {
     var resp = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress'
+        'X-Goog-FieldMask': 'places.id,places.displayName'
       },
-      body: JSON.stringify({
-        textQuery: queries[i],
-        locationBias: {
-          circle: {
-            center: { latitude: 39.76652, longitude: -86.4412135 },
-            radius: 50000.0
-          }
-        }
-      })
+      body: JSON.stringify({ textQuery: queries[i] })
     });
-
-    if (!resp.ok) {
-      console.error('Places search failed for "' + queries[i] + '": ' + resp.status);
-      continue;
-    }
-
+    if (!resp.ok) continue;
     var data = await resp.json();
-    console.log('Search "' + queries[i] + '" returned:', JSON.stringify(data).substring(0, 500));
-
-    if (data.places && data.places.length > 0) {
-      return data.places[0].id;
-    }
+    if (data.places && data.places.length > 0) return data.places[0].id;
   }
-
   return null;
 }
 
