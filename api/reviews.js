@@ -5,22 +5,22 @@
  * Caches response for 24 hours via Cache-Control headers.
  */
 
-const PLACE_QUERY = 'FixFusion Noblesville Indiana';
-const CACHE_SECONDS = 86400;
+var PLACE_QUERY = 'FixFusion Noblesville Indiana';
+var CACHE_SECONDS = 86400;
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  var apiKey = process.env.GOOGLE_PLACES_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: 'API key not configured' });
   }
 
   try {
-    let placeId = process.env.GOOGLE_PLACE_ID || null;
+    var placeId = process.env.GOOGLE_PLACE_ID || null;
 
     if (!placeId) {
       placeId = await findPlaceId(apiKey);
@@ -29,13 +29,13 @@ export default async function handler(req, res) {
       }
     }
 
-    const reviews = await fetchReviews(apiKey, placeId);
+    var reviews = await fetchReviews(apiKey, placeId);
 
-    res.setHeader('Cache-Control', `s-maxage=${CACHE_SECONDS}, stale-while-revalidate`);
+    res.setHeader('Cache-Control', 's-maxage=' + CACHE_SECONDS + ', stale-while-revalidate');
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     return res.status(200).json({
-      placeId,
+      placeId: placeId,
       reviews: reviews.reviews || [],
       rating: reviews.rating || null,
       totalReviews: reviews.totalReviews || 0
@@ -44,11 +44,11 @@ export default async function handler(req, res) {
     console.error('Reviews API error:', err);
     return res.status(500).json({ error: 'Failed to fetch reviews' });
   }
-}
+};
 
 async function findPlaceId(apiKey) {
-  const url = 'https://places.googleapis.com/v1/places:searchText';
-  const response = await fetch(url, {
+  var url = 'https://places.googleapis.com/v1/places:searchText';
+  var resp = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -58,9 +58,9 @@ async function findPlaceId(apiKey) {
     body: JSON.stringify({ textQuery: PLACE_QUERY })
   });
 
-  if (!response.ok) return null;
+  if (!resp.ok) return null;
 
-  const data = await response.json();
+  var data = await resp.json();
   if (data.places && data.places.length > 0) {
     return data.places[0].id;
   }
@@ -68,8 +68,8 @@ async function findPlaceId(apiKey) {
 }
 
 async function fetchReviews(apiKey, placeId) {
-  const url = `https://places.googleapis.com/v1/places/${placeId}`;
-  const response = await fetch(url, {
+  var url = 'https://places.googleapis.com/v1/places/' + placeId;
+  var resp = await fetch(url, {
     method: 'GET',
     headers: {
       'X-Goog-Api-Key': apiKey,
@@ -77,22 +77,24 @@ async function fetchReviews(apiKey, placeId) {
     }
   });
 
-  if (!response.ok) {
-    throw new Error('Places API returned ' + response.status);
+  if (!resp.ok) {
+    throw new Error('Places API returned ' + resp.status);
   }
 
-  const data = await response.json();
-  const reviews = (data.reviews || []).map((r) => ({
-    author: r.authorAttribution?.displayName || 'Anonymous',
-    authorPhoto: r.authorAttribution?.photoUri || null,
-    rating: r.rating || 5,
-    text: r.text?.text || '',
-    time: r.relativePublishTimeDescription || '',
-    profileUrl: r.authorAttribution?.uri || null
-  }));
+  var data = await resp.json();
+  var reviews = (data.reviews || []).map(function (r) {
+    return {
+      author: r.authorAttribution ? r.authorAttribution.displayName : 'Anonymous',
+      authorPhoto: r.authorAttribution ? r.authorAttribution.photoUri : null,
+      rating: r.rating || 5,
+      text: r.text ? r.text.text : '',
+      time: r.relativePublishTimeDescription || '',
+      profileUrl: r.authorAttribution ? r.authorAttribution.uri : null
+    };
+  });
 
   return {
-    reviews,
+    reviews: reviews,
     rating: data.rating || null,
     totalReviews: data.userRatingCount || 0
   };
