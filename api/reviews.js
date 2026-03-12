@@ -2,16 +2,13 @@
  * Vercel Serverless Function — /api/reviews
  *
  * Fetches Google reviews for FixFusion Constraction LLC.
- * Tries multiple search strategies across both legacy and new Places APIs.
- * Filters results by name to avoid false positives.
- * Caches response for 24 hours via Cache-Control headers.
- *
- * Add ?debug=1 to see all candidate Place IDs.
+ * Tries both new and legacy Places API to find reviews.
+ * ?debug=1 returns diagnostic data from both APIs.
  */
 
 var CACHE_SECONDS = 86400;
 var BUSINESS_CID = '9300693256032829380';
-var NAME_PATTERN = /fix\s*fusion/i;
+var FIXFUSION_PLACE_ID = 'ChIJp5Ob8l1tyYcRiOdCtl4MU_g';
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -24,158 +21,119 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'API key not configured' });
   }
 
+  var placeId = process.env.GOOGLE_PLACE_ID || FIXFUSION_PLACE_ID;
   var debug = req.query && req.query.debug === '1';
 
   try {
-    var envPlaceId = process.env.GOOGLE_PLACE_ID || null;
-    var candidates = await gatherCandidates(apiKey, envPlaceId);
-
     if (debug) {
-      var debugInfo = [];
-      for (var d = 0; d < candidates.length; d++) {
-        var detail = await fetchDetailsLegacy(apiKey, candidates[d]);
-        debugInfo.push({
-          placeId: candidates[d],
-          name: detail ? detail.name : 'FETCH_FAILED',
-          totalReviews: detail ? detail.totalReviews : 0,
-          nameMatch: detail ? NAME_PATTERN.test(detail.name) : false
-        });
-      }
+      var legacyResult = await fetchLegacy(apiKey, placeId);
+      var newResult = await fetchNew(apiKey, placeId);
       res.setHeader('Access-Control-Allow-Origin', '*');
-      return res.status(200).json({ candidates: debugInfo });
+      return res.status(200).json({
+        placeId: placeId,
+        legacy: legacyResult,
+        newApi: newResult
+      });
     }
 
-    for (var i = 0; i < candidates.length; i++) {
-      var result = await fetchDetailsLegacy(apiKey, candidates[i]);
-      if (result && result.totalReviews > 0 && NAME_PATTERN.test(result.name)) {
-        return sendJson(res, result);
-      }
+    var result = await fetchNew(apiKey, placeId);
+    if (!result || result.totalReviews === 0) {
+      result = await fetchLegacy(apiKey, placeId);
     }
 
-    for (var j = 0; j < candidates.length; j++) {
-      var fallback = await fetchDetailsLegacy(apiKey, candidates[j]);
-      if (fallback && NAME_PATTERN.test(fallback.name)) {
-        return sendJson(res, fallback);
-      }
+    if (!result) {
+      return res.status(404).json({ error: 'No review data available' });
     }
 
-    return res.status(404).json({ error: 'Business not found' });
+    res.setHeader('Cache-Control', 's-maxage=' + CACHE_SECONDS + ', stale-while-revalidate');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    return res.status(200).json(result);
   } catch (err) {
     console.error('Reviews API error:', err);
     return res.status(500).json({ error: 'Failed to fetch reviews' });
   }
 };
 
-function sendJson(res, data) {
-  res.setHeader('Cache-Control', 's-maxage=' + CACHE_SECONDS + ', stale-while-revalidate');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  return res.status(200).json(data);
-}
-
-async function gatherCandidates(apiKey, envPlaceId) {
-  var ids = [];
-  var seen = {};
-
-  function add(id) {
-    if (id && !seen[id]) { seen[id] = true; ids.push(id); }
-  }
-
-  if (envPlaceId) add(envPlaceId);
-
-  var cidUrl =
-    'https://maps.googleapis.com/maps/api/place/details/json' +
-    '?cid=' + BUSINESS_CID +
-    '&fields=place_id' +
-    '&key=' + apiKey;
+async function fetchNew(apiKey, placeId) {
   try {
-    var cidResp = await fetch(cidUrl);
-    if (cidResp.ok) {
-      var cidData = await cidResp.json();
-      if (cidData.result) add(cidData.result.place_id);
+    var url = 'https://places.googleapis.com/v1/places/' + placeId;
+    var resp = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'X-Goog-Api-Key': apiKey,
+        'X-Goog-FieldMask': 'displayName,reviews,rating,userRatingCount'
+      }
+    });
+
+    if (!resp.ok) {
+      var errText = await resp.text();
+      return { error: 'HTTP ' + resp.status, detail: errText.substring(0, 300) };
     }
-  } catch (_) {}
 
-  var queries = [
-    'FixFusion Constraction LLC',
-    'FixFusion LLC',
-    'FixFusion Indiana'
-  ];
+    var data = await resp.json();
+    var reviews = (data.reviews || []).map(function (r) {
+      return {
+        author: r.authorAttribution ? r.authorAttribution.displayName : 'Anonymous',
+        authorPhoto: r.authorAttribution ? r.authorAttribution.photoUri : null,
+        rating: r.rating || 5,
+        text: r.text ? r.text.text : '',
+        time: r.relativePublishTimeDescription || '',
+        profileUrl: r.authorAttribution ? r.authorAttribution.uri : null
+      };
+    });
 
-  for (var i = 0; i < queries.length; i++) {
-    try {
-      var newUrl = 'https://places.googleapis.com/v1/places:searchText';
-      var newResp = await fetch(newUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Goog-Api-Key': apiKey,
-          'X-Goog-FieldMask': 'places.id,places.displayName'
-        },
-        body: JSON.stringify({ textQuery: queries[i] })
-      });
-      if (newResp.ok) {
-        var newData = await newResp.json();
-        if (newData.places) {
-          for (var p = 0; p < newData.places.length; p++) {
-            add(newData.places[p].id);
-          }
-        }
-      }
-    } catch (_) {}
-
-    try {
-      var oldUrl =
-        'https://maps.googleapis.com/maps/api/place/findplacefromtext/json' +
-        '?input=' + encodeURIComponent(queries[i]) +
-        '&inputtype=textquery' +
-        '&fields=place_id' +
-        '&key=' + apiKey;
-      var oldResp = await fetch(oldUrl);
-      if (oldResp.ok) {
-        var oldData = await oldResp.json();
-        if (oldData.candidates) {
-          for (var c = 0; c < oldData.candidates.length; c++) {
-            add(oldData.candidates[c].place_id);
-          }
-        }
-      }
-    } catch (_) {}
+    return {
+      placeId: placeId,
+      name: data.displayName ? data.displayName.text : '',
+      reviews: reviews,
+      rating: data.rating || null,
+      totalReviews: data.userRatingCount || 0,
+      source: 'new'
+    };
+  } catch (err) {
+    return { error: err.message };
   }
-
-  return ids;
 }
 
-async function fetchDetailsLegacy(apiKey, placeId) {
-  var url =
-    'https://maps.googleapis.com/maps/api/place/details/json' +
-    '?place_id=' + placeId +
-    '&fields=reviews,rating,user_ratings_total,name' +
-    '&reviews_sort=newest' +
-    '&key=' + apiKey;
+async function fetchLegacy(apiKey, placeId) {
+  try {
+    var url =
+      'https://maps.googleapis.com/maps/api/place/details/json' +
+      '?place_id=' + placeId +
+      '&fields=reviews,rating,user_ratings_total,name' +
+      '&reviews_sort=newest' +
+      '&key=' + apiKey;
 
-  var resp = await fetch(url);
-  if (!resp.ok) return null;
+    var resp = await fetch(url);
+    if (!resp.ok) return { error: 'HTTP ' + resp.status };
 
-  var data = await resp.json();
-  if (!data.result) return null;
+    var data = await resp.json();
+    if (data.status && data.status !== 'OK') {
+      return { error: 'API status: ' + data.status, detail: data.error_message || '' };
+    }
+    if (!data.result) return { error: 'No result' };
 
-  var r = data.result;
-  var reviews = (r.reviews || []).map(function (rev) {
+    var r = data.result;
+    var reviews = (r.reviews || []).map(function (rev) {
+      return {
+        author: rev.author_name || 'Anonymous',
+        authorPhoto: rev.profile_photo_url || null,
+        rating: rev.rating || 5,
+        text: rev.text || '',
+        time: rev.relative_time_description || '',
+        profileUrl: rev.author_url || null
+      };
+    });
+
     return {
-      author: rev.author_name || 'Anonymous',
-      authorPhoto: rev.profile_photo_url || null,
-      rating: rev.rating || 5,
-      text: rev.text || '',
-      time: rev.relative_time_description || '',
-      profileUrl: rev.author_url || null
+      placeId: placeId,
+      name: r.name || '',
+      reviews: reviews,
+      rating: r.rating || null,
+      totalReviews: r.user_ratings_total || 0,
+      source: 'legacy'
     };
-  });
-
-  return {
-    placeId: placeId,
-    name: r.name || '',
-    reviews: reviews,
-    rating: r.rating || null,
-    totalReviews: r.user_ratings_total || 0
-  };
+  } catch (err) {
+    return { error: err.message };
+  }
 }
