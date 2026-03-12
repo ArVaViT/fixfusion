@@ -12,8 +12,8 @@
              script-src 'self' 'unsafe-inline';
              style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
              font-src https://fonts.gstatic.com;
-             img-src 'self' data:;
-             connect-src 'self' https://api.web3forms.com;
+             img-src 'self' data: https://lh3.googleusercontent.com;
+             connect-src 'self' https://api.web3forms.com /api/reviews;
              frame-src https://www.google.com;
              base-uri 'self';
              form-action https://api.web3forms.com;" />
@@ -257,8 +257,8 @@
           <ul id="nav-list" class="nav-list" role="list">
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
+            <li><a href="#reviews">Reviews</a></li>
             <li><a href="#quote">Get Quote</a></li>
-            <li><a href="#faq">FAQ</a></li>
             <li><a href="#contacts">Contact</a></li>
           </ul>
         </nav>
@@ -417,6 +417,32 @@
         <p>Noblesville &bull; Carmel &bull; Indianapolis &bull; Fishers &bull; Westfield &bull; Hamilton County &bull; Greenwood &bull; Fortville &bull; Avon &bull; Zionsville &bull; Geist &bull; Plainfield &bull; Lawrence &bull; Anderson&nbsp;&nbsp;&nbsp;</p>
       </div>
     </div>
+
+    <!-- ========= Reviews ========= -->
+    <section id="reviews" class="content-section" aria-labelledby="reviews-heading">
+      <div class="reveal">
+        <span class="section-label">Client Reviews</span>
+        <h2 id="reviews-heading">What Our Clients <span class="accent">Say</span></h2>
+        <div class="section-divider" aria-hidden="true"></div>
+      </div>
+
+      <div class="reviews-summary reveal stagger-1" id="reviews-summary" hidden>
+        <div class="reviews-stars" id="reviews-stars" aria-hidden="true"></div>
+        <p class="reviews-rating-text" id="reviews-rating-text"></p>
+      </div>
+
+      <div class="reviews-carousel reveal stagger-2">
+        <div class="reviews-track" id="reviews-track">
+          <p class="reviews-loading" id="reviews-loading">Loading reviews...</p>
+        </div>
+      </div>
+
+      <a href="https://www.google.com/maps/search/FixFusion+Noblesville+Indiana" target="_blank"
+         rel="noopener noreferrer" class="reviews-cta reveal stagger-3">
+        See all reviews on Google
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+    </section>
 
     <!-- ========= Quote Form ========= -->
     <section id="quote" class="content-section quote-section" aria-labelledby="quote-heading">
