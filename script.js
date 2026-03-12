@@ -586,7 +586,10 @@
         if (loading) loading.remove();
 
         if (!data.reviews || data.reviews.length === 0) {
-          track.innerHTML = '<p class="reviews-loading">No reviews yet.</p>';
+          var section = byId('reviews');
+          if (section) section.style.display = 'none';
+          var navLink = document.querySelector('a[href="#reviews"]');
+          if (navLink && navLink.parentElement) navLink.parentElement.style.display = 'none';
           return;
         }
 
