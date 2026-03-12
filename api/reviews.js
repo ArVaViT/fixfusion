@@ -5,7 +5,7 @@
  * Caches response for 24 hours via Cache-Control headers.
  */
 
-var PLACE_QUERY = 'FixFusion Constraction LLC';
+var PLACE_QUERY = 'FixFusion Constraction LLC Noblesville';
 var CACHE_SECONDS = 86400;
 
 module.exports = async function handler(req, res) {
@@ -55,7 +55,15 @@ async function findPlaceId(apiKey) {
       'X-Goog-Api-Key': apiKey,
       'X-Goog-FieldMask': 'places.id,places.displayName'
     },
-    body: JSON.stringify({ textQuery: PLACE_QUERY })
+    body: JSON.stringify({
+      textQuery: PLACE_QUERY,
+      locationBias: {
+        circle: {
+          center: { latitude: 39.76652, longitude: -86.4412135 },
+          radius: 5000.0
+        }
+      }
+    })
   });
 
   if (!resp.ok) return null;
