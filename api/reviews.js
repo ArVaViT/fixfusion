@@ -25,7 +25,7 @@ module.exports = async function handler(req, res) {
     if (!placeId) {
       placeId = await findPlaceId(apiKey);
       if (!placeId) {
-        return res.status(404).json({ error: 'Business not found on Google Maps', queries: [PLACE_QUERY, 'FixFusion Constraction LLC', 'FixFusion LLC', 'FixFusion'] });
+        return res.status(404).json({ error: 'Business not found on Google Maps' });
       }
     }
 
