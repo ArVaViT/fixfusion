@@ -5,7 +5,7 @@
  * Caches response for 24 hours via Cache-Control headers.
  */
 
-var PLACE_QUERY = 'FixFusion Constraction LLC Noblesville';
+var PLACE_QUERY = 'FixFusion Constraction';
 var CACHE_SECONDS = 86400;
 
 module.exports = async function handler(req, res) {
