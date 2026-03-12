@@ -25,7 +25,7 @@ module.exports = async function handler(req, res) {
     if (!placeId) {
       placeId = await findPlaceId(apiKey);
       if (!placeId) {
-        return res.status(404).json({ error: 'Business not found on Google Maps' });
+        return res.status(404).json({ error: 'Business not found on Google Maps', queries: [PLACE_QUERY, 'FixFusion Constraction LLC', 'FixFusion LLC', 'FixFusion'] });
       }
     }
 
@@ -48,30 +48,45 @@ module.exports = async function handler(req, res) {
 
 async function findPlaceId(apiKey) {
   var url = 'https://places.googleapis.com/v1/places:searchText';
-  var resp = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Goog-Api-Key': apiKey,
-      'X-Goog-FieldMask': 'places.id,places.displayName'
-    },
-    body: JSON.stringify({
-      textQuery: PLACE_QUERY,
-      locationBias: {
-        circle: {
-          center: { latitude: 39.76652, longitude: -86.4412135 },
-          radius: 5000.0
+  var queries = [
+    PLACE_QUERY,
+    'FixFusion Constraction LLC',
+    'FixFusion LLC',
+    'FixFusion'
+  ];
+
+  for (var i = 0; i < queries.length; i++) {
+    var resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': apiKey,
+        'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress'
+      },
+      body: JSON.stringify({
+        textQuery: queries[i],
+        locationBias: {
+          circle: {
+            center: { latitude: 39.76652, longitude: -86.4412135 },
+            radius: 50000.0
+          }
         }
-      }
-    })
-  });
+      })
+    });
 
-  if (!resp.ok) return null;
+    if (!resp.ok) {
+      console.error('Places search failed for "' + queries[i] + '": ' + resp.status);
+      continue;
+    }
 
-  var data = await resp.json();
-  if (data.places && data.places.length > 0) {
-    return data.places[0].id;
+    var data = await resp.json();
+    console.log('Search "' + queries[i] + '" returned:', JSON.stringify(data).substring(0, 500));
+
+    if (data.places && data.places.length > 0) {
+      return data.places[0].id;
+    }
   }
+
   return null;
 }
 
