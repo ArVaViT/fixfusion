@@ -2,13 +2,33 @@
  * Vercel Serverless Function — /api/reviews
  *
  * Fetches Google reviews for FixFusion Constraction LLC.
- * Tries both new and legacy Places API to find reviews.
- * ?debug=1 returns diagnostic data from both APIs.
+ * Falls back to curated reviews when the Places API returns none
+ * (known limitation for Service Area Businesses).
+ * Caches response for 24 hours.
  */
 
 var CACHE_SECONDS = 86400;
-var BUSINESS_CID = '9300693256032829380';
 var FIXFUSION_PLACE_ID = 'ChIJp5Ob8l1tyYcRiOdCtl4MU_g';
+var GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/rdAawirE2MsEsjn69';
+
+var CURATED_REVIEWS = [
+  {
+    author: 'Sergey Mirman',
+    authorPhoto: null,
+    rating: 5,
+    text: 'We hired this company to renovate our child\'s room, and the results were fantastic! They helped us with drywall repair, interior painting, and the quality exceeded our expectations.',
+    time: '42 weeks ago',
+    profileUrl: null
+  },
+  {
+    author: 'Yulia Korablov',
+    authorPhoto: null,
+    rating: 5,
+    text: 'I hired this company for drywall installation and interior painting, and they did an excellent job! The team was professional, punctual, and paid great attention to detail.',
+    time: '42 weeks ago',
+    profileUrl: null
+  }
+];
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -17,123 +37,62 @@ module.exports = async function handler(req, res) {
   }
 
   var apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured' });
-  }
-
   var placeId = process.env.GOOGLE_PLACE_ID || FIXFUSION_PLACE_ID;
-  var debug = req.query && req.query.debug === '1';
 
-  try {
-    if (debug) {
-      var legacyResult = await fetchLegacy(apiKey, placeId);
-      var newResult = await fetchNew(apiKey, placeId);
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      return res.status(200).json({
-        placeId: placeId,
-        legacy: legacyResult,
-        newApi: newResult
-      });
-    }
+  res.setHeader('Cache-Control', 's-maxage=' + CACHE_SECONDS + ', stale-while-revalidate');
+  res.setHeader('Access-Control-Allow-Origin', '*');
 
-    var result = await fetchNew(apiKey, placeId);
-    if (!result || result.totalReviews === 0) {
-      result = await fetchLegacy(apiKey, placeId);
-    }
-
-    if (!result) {
-      return res.status(404).json({ error: 'No review data available' });
-    }
-
-    res.setHeader('Cache-Control', 's-maxage=' + CACHE_SECONDS + ', stale-while-revalidate');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    return res.status(200).json(result);
-  } catch (err) {
-    console.error('Reviews API error:', err);
-    return res.status(500).json({ error: 'Failed to fetch reviews' });
+  if (apiKey) {
+    try {
+      var result = await fetchFromApi(apiKey, placeId);
+      if (result && result.totalReviews > 0) {
+        return res.status(200).json(result);
+      }
+    } catch (_) {}
   }
+
+  return res.status(200).json({
+    placeId: placeId,
+    reviews: CURATED_REVIEWS,
+    rating: 5.0,
+    totalReviews: 2,
+    mapsUrl: GOOGLE_MAPS_URL,
+    source: 'curated'
+  });
 };
 
-async function fetchNew(apiKey, placeId) {
-  try {
-    var url = 'https://places.googleapis.com/v1/places/' + placeId;
-    var resp = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': 'displayName,reviews,rating,userRatingCount'
-      }
-    });
+async function fetchFromApi(apiKey, placeId) {
+  var url =
+    'https://maps.googleapis.com/maps/api/place/details/json' +
+    '?place_id=' + placeId +
+    '&fields=reviews,rating,user_ratings_total' +
+    '&reviews_sort=newest' +
+    '&key=' + apiKey;
 
-    if (!resp.ok) {
-      var errText = await resp.text();
-      return { error: 'HTTP ' + resp.status, detail: errText.substring(0, 300) };
-    }
+  var resp = await fetch(url);
+  if (!resp.ok) return null;
 
-    var data = await resp.json();
-    var reviews = (data.reviews || []).map(function (r) {
-      return {
-        author: r.authorAttribution ? r.authorAttribution.displayName : 'Anonymous',
-        authorPhoto: r.authorAttribution ? r.authorAttribution.photoUri : null,
-        rating: r.rating || 5,
-        text: r.text ? r.text.text : '',
-        time: r.relativePublishTimeDescription || '',
-        profileUrl: r.authorAttribution ? r.authorAttribution.uri : null
-      };
-    });
+  var data = await resp.json();
+  if (!data.result) return null;
 
+  var r = data.result;
+  var reviews = (r.reviews || []).map(function (rev) {
     return {
-      placeId: placeId,
-      name: data.displayName ? data.displayName.text : '',
-      reviews: reviews,
-      rating: data.rating || null,
-      totalReviews: data.userRatingCount || 0,
-      source: 'new'
+      author: rev.author_name || 'Anonymous',
+      authorPhoto: rev.profile_photo_url || null,
+      rating: rev.rating || 5,
+      text: rev.text || '',
+      time: rev.relative_time_description || '',
+      profileUrl: rev.author_url || null
     };
-  } catch (err) {
-    return { error: err.message };
-  }
-}
+  });
 
-async function fetchLegacy(apiKey, placeId) {
-  try {
-    var url =
-      'https://maps.googleapis.com/maps/api/place/details/json' +
-      '?place_id=' + placeId +
-      '&fields=reviews,rating,user_ratings_total,name' +
-      '&reviews_sort=newest' +
-      '&key=' + apiKey;
-
-    var resp = await fetch(url);
-    if (!resp.ok) return { error: 'HTTP ' + resp.status };
-
-    var data = await resp.json();
-    if (data.status && data.status !== 'OK') {
-      return { error: 'API status: ' + data.status, detail: data.error_message || '' };
-    }
-    if (!data.result) return { error: 'No result' };
-
-    var r = data.result;
-    var reviews = (r.reviews || []).map(function (rev) {
-      return {
-        author: rev.author_name || 'Anonymous',
-        authorPhoto: rev.profile_photo_url || null,
-        rating: rev.rating || 5,
-        text: rev.text || '',
-        time: rev.relative_time_description || '',
-        profileUrl: rev.author_url || null
-      };
-    });
-
-    return {
-      placeId: placeId,
-      name: r.name || '',
-      reviews: reviews,
-      rating: r.rating || null,
-      totalReviews: r.user_ratings_total || 0,
-      source: 'legacy'
-    };
-  } catch (err) {
-    return { error: err.message };
-  }
+  return {
+    placeId: placeId,
+    reviews: reviews,
+    rating: r.rating || null,
+    totalReviews: r.user_ratings_total || 0,
+    mapsUrl: GOOGLE_MAPS_URL,
+    source: 'api'
+  };
 }
