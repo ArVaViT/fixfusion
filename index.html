@@ -9,9 +9,9 @@
   <!-- Security -->
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self';
-             script-src 'self' 'unsafe-inline';
+             script-src 'self';
              style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-             font-src https://fonts.gstatic.com;
+             font-src 'self' https://fonts.gstatic.com;
              img-src 'self' data:;
              connect-src 'self' https://api.web3forms.com;
              frame-src https://www.google.com;
@@ -32,7 +32,11 @@
   <!-- Open Graph -->
   <meta property="og:title" content="FixFusion — Premier Construction &amp; Renovation in Indiana" />
   <meta property="og:description" content="Indiana's trusted construction company. New builds, renovations, remodeling in Noblesville, Carmel, Fishers, Indianapolis &amp; Hamilton County. Get a free quote." />
-  <meta property="og:image" content="https://www.fixfusionbuild.com/assets/logo.svg" />
+  <meta property="og:image" content="https://www.fixfusionbuild.com/assets/banner.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1920" />
+  <meta property="og:image:height" content="1080" />
+  <meta property="og:image:alt" content="FixFusion construction project banner" />
   <meta property="og:url" content="https://www.fixfusionbuild.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
@@ -42,6 +46,8 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="FixFusion — #1 Construction Company in Indiana" />
   <meta name="twitter:description" content="Premium construction, renovation &amp; remodeling services across Hamilton County &amp; Indianapolis." />
+  <meta name="twitter:image" content="https://www.fixfusionbuild.com/assets/banner.png" />
+  <meta name="twitter:image:alt" content="FixFusion construction project banner" />
 
   <!-- Preload -->
   <link rel="preload" href="assets/banner.png" as="image" type="image/png" />
@@ -49,6 +55,10 @@
   <link rel="preload" href="styles.css" as="style" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Fonts (loaded async, non-blocking) -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" />
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
@@ -410,8 +420,8 @@
     </section>
 
     <!-- ========= Marquee ========= -->
-    <div class="marquee" role="marquee" aria-label="Service areas across Indiana">
-      <div class="marquee-track" aria-hidden="true">
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
         <p>Noblesville &bull; Carmel &bull; Indianapolis &bull; Fishers &bull; Westfield &bull; Hamilton County &bull; Greenwood &bull; Fortville &bull; Avon &bull; Zionsville &bull; Geist &bull; Plainfield &bull; Lawrence &bull; Anderson&nbsp;&nbsp;&nbsp;</p>
         <p>Noblesville &bull; Carmel &bull; Indianapolis &bull; Fishers &bull; Westfield &bull; Hamilton County &bull; Greenwood &bull; Fortville &bull; Avon &bull; Zionsville &bull; Geist &bull; Plainfield &bull; Lawrence &bull; Anderson&nbsp;&nbsp;&nbsp;</p>
       </div>
@@ -452,7 +462,6 @@
           <input type="hidden" name="access_key" value="68d5f7da-e608-4c06-bc6d-f2516346a21b" />
           <input type="hidden" name="subject" value="New Quote Request — FixFusion Website" />
           <input type="hidden" name="from_name" value="FixFusion Website" />
-          <input type="hidden" name="redirect" value="" />
           <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px">
             <input type="text" name="botcheck" tabindex="-1" autocomplete="off" />
           </div>
@@ -619,6 +628,16 @@
             </div>
           </fieldset>
 
+          <div class="form-error" role="alert" aria-live="polite" hidden>
+            <svg class="form-error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span class="form-error-text"></span>
+          </div>
+
           <div class="form-success" hidden aria-live="polite">
             <div class="success-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -731,7 +750,6 @@
       .services-grid { max-height: none !important; }
       .services-toggle { display: none !important; }
       .nav-list { opacity: 1; visibility: visible; position: static; background: none; }
-      .faq-item[open] p { display: block; }
     </style>
   </noscript>
 

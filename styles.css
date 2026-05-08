@@ -3,9 +3,6 @@
    Mobile-first. Minimal specificity. Zero !important (except reduced-motion).
    ========================================================================== */
 
-/* ===================== FONTS ===================== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 /* ===================== CUSTOM PROPERTIES ===================== */
 :root {
   --gold: #c1a47d;
@@ -1079,6 +1076,32 @@ nav { display: flex; align-items: center; }
   border-color: #e74c3c;
   box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
 }
+
+/* Inline error banner (replaces window.alert) */
+.form-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+  padding: 0.85rem 1rem;
+  background: rgba(231, 76, 60, 0.08);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  border-radius: var(--radius-xs);
+  color: #f1a99f;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: left;
+  animation: fadeInUp 0.3s var(--ease) both;
+}
+.form-error[hidden] { display: none; }
+.form-error-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 0.1rem;
+  color: #e74c3c;
+}
+.form-error-text { flex: 1; }
 
 /* Form navigation */
 .form-nav {

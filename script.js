@@ -379,7 +379,19 @@
     var backBtns = quoteForm.querySelectorAll('.form-back-btn');
     var successEl = qs('.form-success');
     var stepsBar  = qs('.form-steps');
+    var errorEl     = quoteForm.querySelector('.form-error');
+    var errorTextEl = quoteForm.querySelector('.form-error-text');
     var currentStep = 1;
+
+    function showError(msg) {
+      if (!errorEl || !errorTextEl) { window.alert(msg); return; }
+      errorTextEl.textContent = msg;
+      errorEl.hidden = false;
+      try { errorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (_e) {}
+    }
+    function hideError() {
+      if (errorEl) errorEl.hidden = true;
+    }
 
     /* ---- Navigate to step N ---- */
     function goToStep(n) {
@@ -481,6 +493,7 @@
       field.addEventListener('input', function () {
         var group = field.closest('.form-group');
         if (group) group.classList.remove('has-error');
+        hideError();
       });
     });
 
@@ -503,12 +516,13 @@
     /* ---- Submit ---- */
     quoteForm.addEventListener('submit', function (e) {
       e.preventDefault();
+      hideError();
 
       if (!validateStep3()) return;
 
       var now = Date.now();
       if (now - lastSubmitTime < SUBMIT_COOLDOWN_MS) {
-        showFormError('Please wait a few seconds before submitting again.');
+        showError('Please wait a few seconds before submitting again.');
         return;
       }
       lastSubmitTime = now;
@@ -542,12 +556,12 @@
             if (successEl) successEl.hidden = false;
           } else {
             resetSubmitButton(submitBtn, btnText, btnLoad);
-            showFormError('Something went wrong. Please try calling us directly at +1 (417) 470-9888.');
+            showError('Something went wrong. Please try calling us directly at +1 (417) 470-9888.');
           }
         })
         .catch(function () {
           resetSubmitButton(submitBtn, btnText, btnLoad);
-          showFormError('Network error. Please try calling us directly at +1 (417) 470-9888.');
+          showError('Network error. Please try calling us directly at +1 (417) 470-9888.');
         });
     });
   }
@@ -557,11 +571,6 @@
     if (text)   text.hidden = false;
     if (loader) loader.hidden = true;
     if (btn)    btn.disabled = false;
-  }
-
-  /** Show an error message to the user. */
-  function showFormError(msg) {
-    window.alert(msg);
   }
 
 })();
