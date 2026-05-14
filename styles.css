@@ -1580,3 +1580,77 @@ footer::before {
     border: 2px solid Highlight;
   }
 }
+
+#scrollTopBtn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+
+  width: 64px;
+  height: 64px;
+
+  border: 1px solid rgba(201, 161, 74, 0.25);
+  border-radius: 50%;
+
+  background: #1b1814;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 20px rgba(201, 161, 74, 0.08);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(16px);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+
+  z-index: 999;
+}
+
+#scrollTopBtn.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#scrollTopBtn:hover {
+  background: #24201b;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.5),
+    0 0 24px rgba(201, 161, 74, 0.18);
+
+  transform: translateY(-3px);
+}
+
+#scrollTopBtn:active {
+  transform: scale(0.95);
+}
+
+/* Arrow */
+#scrollTopBtn .arrow {
+  width: 14px;
+  height: 14px;
+
+  border-left: 3px solid #c9a14a;
+  border-top: 3px solid #c9a14a;
+
+  transform: rotate(45deg) translate(2px, 2px);
+
+  transition: border-color 0.3s ease;
+}
+
+#scrollTopBtn:hover .arrow {
+  border-color: #e5c16f;
+}
