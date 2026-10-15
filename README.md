@@ -44,9 +44,10 @@
 ```
 fixfusion/
 ├── assets/              # Images, SVG icons, logos
-│   ├── icons/           # Service icons (1.svg – 9.svg)
-│   ├── banner.png       # Hero background (desktop)
-│   ├── mobile_logo.png  # Hero background (mobile)
+│   ├── icons/           # Service icons (1–9, WebP with PNG fallback)
+│   ├── fonts/           # Self-hosted Inter (variable, latin + latin-ext)
+│   ├── banner.avif      # Hero background (AVIF/WebP, JPEG fallback)
+│   ├── banner.png       # Social share image (og:image)
 │   ├── logo.svg         # Main logo
 │   ├── logo2.svg        # Navigation logo
 │   └── ...

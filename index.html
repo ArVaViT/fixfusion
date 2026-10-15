@@ -10,8 +10,8 @@
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self';
              script-src 'self';
-             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-             font-src 'self' https://fonts.gstatic.com;
+             style-src 'self' 'unsafe-inline';
+             font-src 'self';
              img-src 'self' data:;
              connect-src 'self' https://api.web3forms.com;
              frame-src https://www.google.com;
@@ -49,16 +49,10 @@
   <meta name="twitter:image" content="https://www.fixfusionbuild.com/assets/banner.png" />
   <meta name="twitter:image:alt" content="FixFusion construction project banner" />
 
-  <!-- Preload -->
-  <link rel="preload" href="assets/banner.png" as="image" type="image/png" />
-  <link rel="preload" href="assets/logo2.svg" as="image" type="image/svg+xml" />
-  <link rel="preload" href="styles.css" as="style" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <!-- Fonts (loaded async, non-blocking) -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" />
+  <!-- Preload: the hero logo is the LCP element; the banner paints behind it -->
+  <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" fetchpriority="high" />
+  <link rel="preload" href="assets/banner.avif" as="image" type="image/avif" fetchpriority="high" />
+  <link rel="preload" href="assets/fonts/inter-latin-v20.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
@@ -275,14 +269,18 @@
       <h1 id="hero-heading" class="visually-hidden">
         FixFusion — Premier Construction &amp; Renovation Company in Noblesville, Carmel, Indianapolis &amp; Hamilton County, Indiana
       </h1>
-      <img src="assets/banner.png" alt="" class="hero-banner" loading="eager" aria-hidden="true"
-           width="1920" height="1080" fetchpriority="high" />
+      <picture>
+        <source srcset="assets/banner.avif" type="image/avif" />
+        <source srcset="assets/banner.webp" type="image/webp" />
+        <img src="assets/banner.jpg" alt="" class="hero-banner" loading="eager" aria-hidden="true"
+             width="1536" height="1024" fetchpriority="high" decoding="async" />
+      </picture>
       <div class="hero-overlay" aria-hidden="true"></div>
 
       <div class="hero-content">
         <div class="container hero-inner">
           <img src="assets/logo.svg" alt="FixFusion Construction Company" class="hero-logo"
-               width="600" height="340" loading="eager" />
+               width="600" height="340" loading="eager" fetchpriority="high" />
           <p class="hero-tagline">Licensed General Contractor &bull; Hamilton County &amp; Indianapolis</p>
           <div class="hero-actions">
             <a href="#quote" class="hero-btn primary">Get Free Quote</a>
@@ -400,15 +398,15 @@
       </button>
 
       <div id="services-grid" class="services-grid" role="list" aria-label="Construction services">
-        <div class="service-box reveal stagger-1" role="listitem"><img src="assets/icons/1.svg" alt="New construction icon" class="service-icon" width="48" height="48" loading="lazy" /><p>New Construction</p></div>
-        <div class="service-box reveal stagger-2" role="listitem"><img src="assets/icons/2.svg" alt="Renovation icon" class="service-icon" width="48" height="48" loading="lazy" /><p>Renovations</p></div>
-        <div class="service-box reveal stagger-3" role="listitem"><img src="assets/icons/3.svg" alt="Remodeling icon" class="service-icon" width="48" height="48" loading="lazy" /><p>Remodeling</p></div>
-        <div class="service-box reveal stagger-4" role="listitem"><img src="assets/icons/4.svg" alt="Restoration icon" class="service-icon" width="48" height="48" loading="lazy" /><p>Restoration</p></div>
-        <div class="service-box reveal stagger-5" role="listitem"><img src="assets/icons/5.svg" alt="Interior finishing icon" class="service-icon" width="48" height="48" loading="lazy" /><p>Interior Finishing</p></div>
-        <div class="service-box reveal stagger-6" role="listitem"><img src="assets/icons/6.svg" alt="Exterior finishing icon" class="service-icon" width="48" height="48" loading="lazy" /><p>Exterior Finishing</p></div>
-        <div class="service-box reveal stagger-7" role="listitem"><img src="assets/icons/7.svg" alt="Custom home design icon" class="service-icon" width="48" height="48" loading="lazy" /><p>Custom Design</p></div>
-        <div class="service-box reveal stagger-8" role="listitem"><img src="assets/icons/8.svg" alt="Architecture icon" class="service-icon" width="48" height="48" loading="lazy" /><p>Architecture</p></div>
-        <div class="service-box reveal stagger-9" role="listitem"><img src="assets/icons/9.svg" alt="Project consulting icon" class="service-icon" width="48" height="48" loading="lazy" /><p>Project Consulting</p></div>
+        <div class="service-box reveal stagger-1" role="listitem"><picture><source srcset="assets/icons/1.webp" type="image/webp" /><img src="assets/icons/1.png" alt="New construction icon" class="service-icon" width="48" height="48" loading="lazy" decoding="async" /></picture><p>New Construction</p></div>
+        <div class="service-box reveal stagger-2" role="listitem"><picture><source srcset="assets/icons/2.webp" type="image/webp" /><img src="assets/icons/2.png" alt="Renovation icon" class="service-icon" width="48" height="48" loading="lazy" decoding="async" /></picture><p>Renovations</p></div>
+        <div class="service-box reveal stagger-3" role="listitem"><picture><source srcset="assets/icons/3.webp" type="image/webp" /><img src="assets/icons/3.png" alt="Remodeling icon" class="service-icon" width="48" height="48" loading="lazy" decoding="async" /></picture><p>Remodeling</p></div>
+        <div class="service-box reveal stagger-4" role="listitem"><picture><source srcset="assets/icons/4.webp" type="image/webp" /><img src="assets/icons/4.png" alt="Restoration icon" class="service-icon" width="48" height="48" loading="lazy" decoding="async" /></picture><p>Restoration</p></div>
+        <div class="service-box reveal stagger-5" role="listitem"><picture><source srcset="assets/icons/5.webp" type="image/webp" /><img src="assets/icons/5.png" alt="Interior finishing icon" class="service-icon" width="48" height="48" loading="lazy" decoding="async" /></picture><p>Interior Finishing</p></div>
+        <div class="service-box reveal stagger-6" role="listitem"><picture><source srcset="assets/icons/6.webp" type="image/webp" /><img src="assets/icons/6.png" alt="Exterior finishing icon" class="service-icon" width="48" height="48" loading="lazy" decoding="async" /></picture><p>Exterior Finishing</p></div>
+        <div class="service-box reveal stagger-7" role="listitem"><picture><source srcset="assets/icons/7.webp" type="image/webp" /><img src="assets/icons/7.png" alt="Custom home design icon" class="service-icon" width="48" height="48" loading="lazy" decoding="async" /></picture><p>Custom Design</p></div>
+        <div class="service-box reveal stagger-8" role="listitem"><picture><source srcset="assets/icons/8.webp" type="image/webp" /><img src="assets/icons/8.png" alt="Architecture icon" class="service-icon" width="48" height="48" loading="lazy" decoding="async" /></picture><p>Architecture</p></div>
+        <div class="service-box reveal stagger-9" role="listitem"><picture><source srcset="assets/icons/9.webp" type="image/webp" /><img src="assets/icons/9.png" alt="Project consulting icon" class="service-icon" width="48" height="48" loading="lazy" decoding="async" /></picture><p>Project Consulting</p></div>
       </div>
     </section>
 
